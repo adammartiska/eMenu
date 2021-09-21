@@ -15,8 +15,8 @@ const NavBar = () => {
           <Link to="/drinks" className="navbar-logo">
             <FaBeer size="50px" />
           </Link>
-          <div className="menu-icon"></div>
         </div>
+        <br />
       </div>
     </>
   );
