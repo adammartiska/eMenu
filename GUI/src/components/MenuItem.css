@@ -2,4 +2,12 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+}
+
+.menu-item-tail {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-left: 8px;
 }
