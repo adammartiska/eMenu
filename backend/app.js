@@ -1,10 +1,11 @@
 let express = require('express');
+const path = require('path');
 
-let app = express();
+const app = express();
 
 //app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(bodyParser.json());
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('./routes'));
 
