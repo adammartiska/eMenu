@@ -2,7 +2,6 @@ import React from "react";
 import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { IoBagAdd } from "react-icons/io5";
 import "./MenuItem.css";
 
 const MenuItem = ({ name, price }) => {
@@ -14,7 +13,7 @@ const MenuItem = ({ name, price }) => {
           <AddShoppingCartIcon />
         </IconButton>
         <Divider orientation="vertical" variant="middle" flexItem />
-        <div style={{ marginLeft: 10 }}>{price} €</div>
+        <div style={{ marginLeft: 10 }}>{price}€</div>
       </div>
     </div>
   );
