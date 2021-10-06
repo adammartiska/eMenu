@@ -11,12 +11,17 @@ const MenuItem2 = ({ name, price }) => {
     <div className="menu-item-wrapper">
       <div>{name}</div>
       <div className="menu-item-tail">
-        <ButtonGroup
-          class=".MuiButtonGroup-root"
-          variant="contained"
-          aria-label="outlined primary button group"
-        >
-          <IconButton size="small" aria-label="delete" color="primary">
+        <ButtonGroup size="small" variant="contained">
+          <IconButton
+            size="small"
+            aria-label="delete"
+            color="primary"
+            sx={{
+              "&.MuiButtonGroup-grouped": {
+                width: 30,
+              },
+            }}
+          >
             <RemoveIcon />
           </IconButton>
           <Button
@@ -26,12 +31,22 @@ const MenuItem2 = ({ name, price }) => {
                 bgcolor: "primary.dark",
                 color: "white",
               },
-              minWidth: 40,
             }}
           >
             0
           </Button>
-          <IconButton aria-label="delete" color="primary">
+          <IconButton
+            aria-label="delete"
+            color="primary"
+            style={{
+              maxWidth: 20,
+            }}
+            sx={{
+              "&.MuiButtonGroup-root": {
+                minWidth: 20,
+              },
+            }}
+          >
             <AddIcon />
           </IconButton>
         </ButtonGroup>
