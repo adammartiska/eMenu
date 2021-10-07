@@ -39,13 +39,10 @@ const DrinksMenuPage = () => {
     [drinksOrder]
   );
 
+  //TODO ADD some kind of user notification that items were added into cart
   const handleAddToBag = React.useCallback(
-    (id) => {
-      // dispatch to Redux store???
-      dispatch(addToCart({ id, value: drinksOrder[id] }));
-      console.log(drinks);
-    },
-    [drinks, drinksOrder, dispatch]
+    (id) => dispatch(addToCart({ id, value: drinksOrder[id] })),
+    [drinksOrder, dispatch]
   );
 
   return (

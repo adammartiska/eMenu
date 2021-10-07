@@ -15,9 +15,14 @@ const MenuItem3 = ({
   onAddToBagClick,
 }) => {
   const [expanded, setExpanded] = React.useState(false);
+  const handleAddToBag = () => {
+    onAddToBagClick(id);
+    setExpanded(false);
+  };
   return (
     <Box
       sx={{
+        boxShadow: 3,
         border: 1,
         borderColor: "primary.main",
         borderRadius: 4,
@@ -45,7 +50,7 @@ const MenuItem3 = ({
             onRemoveButtonClick={onRemoveButtonClick}
           />
           <Button
-            onClick={() => onAddToBagClick(id)}
+            onClick={handleAddToBag}
             color="primary"
             variant="contained"
             endIcon={<AddShoppingCartIcon />}
