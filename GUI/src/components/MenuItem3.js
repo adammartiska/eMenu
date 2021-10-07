@@ -12,6 +12,7 @@ const MenuItem3 = ({
   count,
   onAddButtonClick,
   onRemoveButtonClick,
+  onAddToBagClick,
 }) => {
   const [expanded, setExpanded] = React.useState(false);
   return (
@@ -44,6 +45,7 @@ const MenuItem3 = ({
             onRemoveButtonClick={onRemoveButtonClick}
           />
           <Button
+            onClick={() => onAddToBagClick(id)}
             color="primary"
             variant="contained"
             endIcon={<AddShoppingCartIcon />}

@@ -2,6 +2,8 @@ import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import FoodMenuPage from "./pages/food-menu-page";
 import DrinksMenuPage from "./pages/drinks-menu-page";
+import store from "./store";
+import { Provider } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import "./App.css";
 
@@ -37,19 +39,21 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <NavBar />
-        <Switch>
-          <Route path="/food">
-            <FoodMenuPage />
-          </Route>
-          <Route path="/drinks">
-            <DrinksMenuPage />
-          </Route>
-        </Switch>
-      </Router>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <NavBar />
+          <Switch>
+            <Route path="/food">
+              <FoodMenuPage />
+            </Route>
+            <Route path="/drinks">
+              <DrinksMenuPage />
+            </Route>
+          </Switch>
+        </Router>
+      </ThemeProvider>
+    </Provider>
   );
 }
 
