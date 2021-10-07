@@ -1,22 +1,18 @@
 import React from "react";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { styled } from "@mui/system";
+import { styled, Box } from "@mui/system";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import Counter from "./Counter";
 import "./MenuItem.css";
-import { Box } from "@mui/system";
-//import { makeStyles } from "@mui/system";
 
-// const useStyles = makeStyles((theme) => ({
-//   expandable: {
-//     backgroundColor: theme.palette.main.darker,
-//   },
-// }));
-
-const MenuItem3 = ({ name, price }) => {
-  //const classes = useStyles();
+const MenuItem3 = ({
+  name,
+  id,
+  price,
+  count,
+  onAddButtonClick,
+  onRemoveButtonClick,
+}) => {
   const [expanded, setExpanded] = React.useState(false);
   return (
     <Box
@@ -41,44 +37,24 @@ const MenuItem3 = ({ name, price }) => {
       </Button>
       {expanded && (
         <div className="expanded-content">
-          <ButtonGroup
-            sx={{
-              height: 30,
-            }}
-            size="small"
+          <Counter
+            id={id}
+            count={count}
+            onAddButtonClick={onAddButtonClick}
+            onRemoveButtonClick={onRemoveButtonClick}
+          />
+          <Button
+            color="primary"
             variant="contained"
+            endIcon={<AddShoppingCartIcon />}
+            sx={{
+              height: 35,
+              bgcolor: "primary.dark",
+              marginLeft: 2,
+            }}
           >
-            <IconButton
-              size="small"
-              aria-label="delete"
-              color="primary"
-              sx={{
-                width: 30,
-              }}
-            >
-              <RemoveIcon />
-            </IconButton>
-            <Button
-              disabled
-              sx={{
-                "&.Mui-disabled": {
-                  bgcolor: "primary.dark",
-                  color: "white",
-                },
-              }}
-            >
-              0
-            </Button>
-            <IconButton
-              aria-label="delete"
-              color="primary"
-              sx={{
-                width: 30,
-              }}
-            >
-              <AddIcon />
-            </IconButton>
-          </ButtonGroup>
+            Pridat
+          </Button>
         </div>
       )}
     </Box>

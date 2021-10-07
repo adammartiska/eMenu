@@ -1,22 +1,53 @@
 import React from "react";
-import { Button, ButtonGroup } from "react-bootstrap";
-import { FaPlus, FaMinus } from "react-icons/fa";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import "./MenuItem.css";
 import "./Counter.css";
 
-const Counter = ({ name, price }) => {
-  const [count, setCount] = React.useState(0);
+const Counter = ({ id, count, onAddButtonClick, onRemoveButtonClick }) => {
   return (
-    <ButtonGroup aria-label="Basic example" className="buttonGroupWrapper">
-      <Button variant="light" className="buttonIcon">
-        <FaPlus />
+    <ButtonGroup
+      sx={{
+        height: 30,
+      }}
+      size="small"
+      variant="contained"
+    >
+      <IconButton
+        onClick={() => onRemoveButtonClick(id)}
+        size="small"
+        aria-label="delete"
+        color="primary"
+        sx={{
+          width: 30,
+        }}
+      >
+        <RemoveIcon />
+      </IconButton>
+      <Button
+        disabled
+        sx={{
+          "&.Mui-disabled": {
+            bgcolor: "primary.dark",
+            color: "white",
+          },
+        }}
+      >
+        {count}
       </Button>
-      <Button variant="light" className="buttonIcon">
-        <div>{count}</div>
-      </Button>
-      <Button variant="light" className="buttonIcon">
-        <FaMinus />
-      </Button>
+      <IconButton
+        onClick={() => onAddButtonClick(id)}
+        aria-label="delete"
+        color="primary"
+        sx={{
+          width: 30,
+        }}
+      >
+        <AddIcon />
+      </IconButton>
     </ButtonGroup>
   );
 };
