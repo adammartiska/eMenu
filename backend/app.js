@@ -1,4 +1,4 @@
-let express = require('express');
+const express = require('express');
 const path = require('path');
 
 const app = express();
@@ -8,6 +8,10 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('./routes'));
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 let server = app.listen(4000, () => {
     console.log('Listening on port ' + server.address().port);
