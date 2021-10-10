@@ -1,10 +1,15 @@
+import React from "react";
 import NavBar from "./components/NavBar";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import FoodMenuPage from "./pages/food-menu-page";
 import DrinksMenuPage from "./pages/drinks-menu-page";
 import store from "./store";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import { Provider } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import LocalBarIcon from "@mui/icons-material/LocalBar";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
 import "./App.css";
 
 const theme = createTheme({
@@ -38,11 +43,11 @@ const theme = createTheme({
 });
 
 function App() {
+  const [value, setValue] = React.useState("/");
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Router>
-          <NavBar />
           <Switch>
             <Route path="/food">
               <FoodMenuPage />
@@ -51,6 +56,32 @@ function App() {
               <DrinksMenuPage />
             </Route>
           </Switch>
+          <BottomNavigation
+            sx={{
+              width: "100%",
+              position: "fixed",
+              bottom: 0,
+            }}
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction
+              icon={<LocalBarIcon />}
+              label="Drinks"
+              component={Link}
+              to="/drinks"
+            />
+            <BottomNavigationAction
+              label="Food"
+              component={Link}
+              to="/food"
+              icon={<RestaurantIcon />}
+            />
+            {/* <BottomNavigationAction label="Default" component={Link} to="/" />  */}
+          </BottomNavigation>
         </Router>
       </ThemeProvider>
     </Provider>
