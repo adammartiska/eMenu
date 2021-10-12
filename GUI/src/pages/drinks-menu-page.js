@@ -47,10 +47,8 @@ const DrinksMenuPage = () => {
 
   return (
     <div>
-      <div>Here will be list of all drinks</div>
       <MenuItem name="Coca Cola" price="12.80" />
-      <MenuItem2 name="Coca Cola" price="12.80" />
-      <MenuItem3
+      <MenuItem2
         id="cocaCola"
         onAddButtonClick={handleAddButtonClick}
         onRemoveButtonClick={handleRemoveButtonClick}
@@ -58,6 +56,15 @@ const DrinksMenuPage = () => {
         name="Coca Cola"
         count={drinksOrder.cocaCola}
         price="12.80"
+      />
+      <MenuItem3
+        id="cocaCola"
+        onAddButtonClick={handleAddButtonClick}
+        onRemoveButtonClick={handleRemoveButtonClick}
+        onAddToBagClick={handleAddToBag}
+        name="Coca Cola"
+        count={drinksOrder.cocaCola}
+        price="12.80 €"
       />
 
       <MenuItem3
@@ -67,7 +74,7 @@ const DrinksMenuPage = () => {
         onAddToBagClick={handleAddToBag}
         name="Sprite"
         count={drinksOrder.sprite}
-        price="8.20"
+        price="8.20 €"
       />
     </div>
   );

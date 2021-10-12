@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import { styled, Box } from "@mui/system";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Counter from "./Counter";
@@ -42,35 +43,33 @@ const MenuItem3 = ({
         <div>{price}</div>
       </Button>
       {expanded && (
-        <div className="expanded-content">
-          <Counter
-            id={id}
-            count={count}
-            onAddButtonClick={onAddButtonClick}
-            onRemoveButtonClick={onRemoveButtonClick}
-          />
-          <Button
-            onClick={handleAddToBag}
-            color="primary"
-            variant="contained"
-            endIcon={<AddShoppingCartIcon />}
-            sx={{
-              height: 35,
-              bgcolor: "primary.dark",
-              marginLeft: 2,
-            }}
-          >
-            Pridat
-          </Button>
-        </div>
+        <>
+          <Divider variant="middle" />
+          <div className="expanded-content">
+            <Counter
+              id={id}
+              count={count}
+              onAddButtonClick={onAddButtonClick}
+              onRemoveButtonClick={onRemoveButtonClick}
+            />
+            <Button
+              onClick={handleAddToBag}
+              color="primary"
+              variant="contained"
+              endIcon={<AddShoppingCartIcon />}
+              sx={{
+                height: 35,
+                bgcolor: "primary.dark",
+                marginLeft: 2,
+              }}
+            >
+              Pridat
+            </Button>
+          </div>
+        </>
       )}
     </Box>
   );
 };
 
-export default styled(MenuItem3)(({ theme }) => ({
-  color: "#ccc",
-  backgroundColor: theme.palette.primary.main,
-  // padding: theme.spacing(1),
-  // borderRadius: theme.shape.borderRadius,
-}));
+export default MenuItem3;

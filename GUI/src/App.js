@@ -5,6 +5,8 @@ import FoodMenuPage from "./pages/food-menu-page";
 import DrinksMenuPage from "./pages/drinks-menu-page";
 import store from "./store";
 import BottomNavigation from "@mui/material/BottomNavigation";
+import AppBar from "@mui/material/AppBar";
+import Typography from "@mui/material/Typography";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import { Provider } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -48,6 +50,20 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Router>
+          <AppBar
+            position="absolute"
+            sx={{
+              marginTop: 0,
+              height: 45,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h6" color="inherit" component="div">
+              U stareho kokota
+            </Typography>
+          </AppBar>
           <Switch>
             <Route path="/food">
               <FoodMenuPage />
