@@ -21,13 +21,42 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#0971f1",
-      darker: "#053e85",
+      main: "#1769aa",
+      lighter: "##6573C3",
+    },
+    lighter: {
+      main: "#757ce8",
     },
     neutral: {
       main: "#64748B",
       contrastText: "#fff",
     },
+    secondary: {
+      main: "#9e8df0",
+    },
+    primaryColor: "#4a148c",
+    secondaryColor: "#ff6f00",
+    sedatmava: "#C9C9C9",
+    carhartt: "#006f33",
+    primaryPurple: "#6200EE",
+    primaryBlue: "#246EE9",
+    lightGray: "#EAEAEA",
+    cornFlower: "#7B8CDE",
+    charCoal: {
+      main: "#2D4654",
+    },
+    mantis: "#7DD181",
+    onyx: {
+      main: "#D0CFCF",
+      // zaujimava modra main: "#6699CC",
+      //main: "#DFE0DC",
+      //main: "#F4F4F8",
+      //main: "#C9CAD9",
+    },
+    onyxDarker: {
+      main: "#484747",
+    },
+    darkGray: "#ccc",
   },
   components: {
     MuiButtonGroup: {
@@ -51,53 +80,59 @@ function App() {
       <ThemeProvider theme={theme}>
         <Router>
           <AppBar
-            position="absolute"
+            position="sticky"
+            color="onyx"
             sx={{
               marginTop: 0,
-              height: 45,
+              height: 55,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <Typography variant="h6" color="inherit" component="div">
+            <Typography variant="h6" color="white" component="div">
               U stareho kokota
             </Typography>
+            <Typography variant="subtitle2" color="inherit" component="div">
+              Clementisova 1589/31, Banovce nad Bebravou
+            </Typography>
           </AppBar>
-          <Switch>
-            <Route path="/food">
-              <FoodMenuPage />
-            </Route>
-            <Route path="/drinks">
-              <DrinksMenuPage />
-            </Route>
-          </Switch>
-          <BottomNavigation
-            sx={{
-              width: "100%",
-              position: "fixed",
-              bottom: 0,
-            }}
-            showLabels
-            value={value}
-            onChange={(event, newValue) => {
-              setValue(newValue);
-            }}
-          >
-            <BottomNavigationAction
-              icon={<LocalBarIcon />}
-              label="Drinks"
-              component={Link}
-              to="/drinks"
-            />
-            <BottomNavigationAction
-              label="Food"
-              component={Link}
-              to="/food"
-              icon={<RestaurantIcon />}
-            />
-            {/* <BottomNavigationAction label="Default" component={Link} to="/" />  */}
-          </BottomNavigation>
+          <div className="app-wrapper">
+            <Switch>
+              <Route path="/food">
+                <FoodMenuPage />
+              </Route>
+              <Route path="/drinks">
+                <DrinksMenuPage />
+              </Route>
+            </Switch>
+            <BottomNavigation
+              sx={{
+                width: "100%",
+                position: "fixed",
+                bottom: 0,
+              }}
+              showLabels
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+            >
+              <BottomNavigationAction
+                icon={<LocalBarIcon />}
+                label="Napoje"
+                component={Link}
+                to="/drinks"
+              />
+              <BottomNavigationAction
+                label="Jedla"
+                component={Link}
+                to="/food"
+                icon={<RestaurantIcon />}
+              />
+              {/* <BottomNavigationAction label="Default" component={Link} to="/" />  */}
+            </BottomNavigation>
+          </div>
         </Router>
       </ThemeProvider>
     </Provider>

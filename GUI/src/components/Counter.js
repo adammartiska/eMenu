@@ -20,7 +20,7 @@ const Counter = ({ id, count, onAddButtonClick, onRemoveButtonClick }) => {
         onClick={() => onRemoveButtonClick(id)}
         size="small"
         aria-label="delete"
-        color="primary"
+        color="onyxDarker"
         sx={{
           width: 30,
         }}
@@ -31,8 +31,8 @@ const Counter = ({ id, count, onAddButtonClick, onRemoveButtonClick }) => {
         disabled
         sx={{
           "&.Mui-disabled": {
-            bgcolor: "primary.dark",
-            color: "white",
+            bgcolor: "onyx.main",
+            color: "black",
           },
         }}
       >
@@ -41,7 +41,7 @@ const Counter = ({ id, count, onAddButtonClick, onRemoveButtonClick }) => {
       <IconButton
         onClick={() => onAddButtonClick(id)}
         aria-label="delete"
-        color="primary"
+        color="onyxDarker"
         sx={{
           width: 30,
         }}

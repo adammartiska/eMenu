@@ -23,15 +23,16 @@ const MenuItem3 = ({
   return (
     <Box
       sx={{
-        boxShadow: 3,
+        boxShadow: 2,
         border: 1,
-        borderColor: "primary.main",
+        borderColor: "onyx.main",
         borderRadius: 4,
       }}
     >
       <Button
         onClick={() => setExpanded(!expanded)}
         sx={{
+          color: "black",
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
@@ -54,12 +55,12 @@ const MenuItem3 = ({
             />
             <Button
               onClick={handleAddToBag}
-              color="primary"
+              color="onyx"
               variant="contained"
               endIcon={<AddShoppingCartIcon />}
               sx={{
                 height: 35,
-                bgcolor: "primary.dark",
+                bgcolor: "onyx",
                 marginLeft: 2,
               }}
             >

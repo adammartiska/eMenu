@@ -1,5 +1,9 @@
-* {
+body {
+  margin: 0;
+}
+
+.app-wrapper {
   box-sizing: border-box;
-  margin: 5px 3px;
+  margin: 8px;
   padding: 0;
 }
