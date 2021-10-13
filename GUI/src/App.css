@@ -1,9 +1,10 @@
 body {
+  /* optional set margin for whole app */
   margin: 0;
 }
 
 .app-wrapper {
   box-sizing: border-box;
-  margin: 8px;
+  margin: 0px;
   padding: 0;
 }

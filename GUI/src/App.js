@@ -31,9 +31,6 @@ const theme = createTheme({
       main: "#64748B",
       contrastText: "#fff",
     },
-    secondary: {
-      main: "#9e8df0",
-    },
     primaryColor: "#4a148c",
     secondaryColor: "#ff6f00",
     sedatmava: "#C9C9C9",
@@ -48,10 +45,14 @@ const theme = createTheme({
     mantis: "#7DD181",
     onyx: {
       main: "#D0CFCF",
+      font: "#000",
       // zaujimava modra main: "#6699CC",
       //main: "#DFE0DC",
       //main: "#F4F4F8",
       //main: "#C9CAD9",
+    },
+    secondary: {
+      main: "#6425A7",
     },
     onyxDarker: {
       main: "#484747",
@@ -90,7 +91,7 @@ function App() {
               alignItems: "center",
             }}
           >
-            <Typography variant="h6" color="white" component="div">
+            <Typography variant="h6" color="inherit" component="div">
               U stareho kokota
             </Typography>
             <Typography variant="subtitle2" color="inherit" component="div">
@@ -108,6 +109,7 @@ function App() {
             </Switch>
             <BottomNavigation
               sx={{
+                bgcolor: "onyx.main",
                 width: "100%",
                 position: "fixed",
                 bottom: 0,
@@ -119,12 +121,24 @@ function App() {
               }}
             >
               <BottomNavigationAction
+                sx={{
+                  color: "onyx.font",
+                  "&.Mui-selected": {
+                    color: "secondary.main",
+                  },
+                }}
                 icon={<LocalBarIcon />}
                 label="Napoje"
                 component={Link}
                 to="/drinks"
               />
               <BottomNavigationAction
+                sx={{
+                  color: "onyx.font",
+                  "&.Mui-selected": {
+                    color: "secondary.main",
+                  },
+                }}
                 label="Jedla"
                 component={Link}
                 to="/food"
