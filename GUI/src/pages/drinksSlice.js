@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const drinksSlice = createSlice({
   name: "drinks",
   initialState: {
-    drinks: {},
+    drinks: [],
   },
   reducers: {
     addToCart: (state, { payload }) => {
@@ -11,10 +11,7 @@ export const drinksSlice = createSlice({
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state.drinks = {
-        ...state.drinks,
-        [payload.id]: payload.value,
-      };
+      state.drinks = [...state.drinks, payload];
     },
     // decrement: (state) => {
     //   state.value -= 1

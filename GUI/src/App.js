@@ -1,19 +1,13 @@
 import React from "react";
-import NavBar from "./components/NavBar";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import FoodMenuPage from "./pages/food-menu-page";
 import DrinksMenuPage from "./pages/drinks-menu-page";
+import CheckoutPage from "./pages/checkout-page";
 import store from "./store";
-import BottomNavigation from "@mui/material/BottomNavigation";
 import AppBar from "@mui/material/AppBar";
 import Typography from "@mui/material/Typography";
-import Badge from "@mui/material/Badge";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import { Provider } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import LocalBarIcon from "@mui/icons-material/LocalBar";
-import RestaurantIcon from "@mui/icons-material/Restaurant";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import BottomNavigator from "./BottomNavigator";
 import "./App.css";
 
@@ -56,6 +50,9 @@ const theme = createTheme({
     },
     secondary: {
       main: "#6425A7",
+    },
+    secondaryLighter: {
+      main: "#F4EDFB",
     },
     onyxDarker: {
       main: "#484747",
@@ -108,6 +105,9 @@ function App() {
               </Route>
               <Route path="/drinks">
                 <DrinksMenuPage />
+              </Route>
+              <Route path="/cart">
+                <CheckoutPage />
               </Route>
             </Switch>
             <BottomNavigator

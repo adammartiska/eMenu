@@ -15,6 +15,11 @@ const initialState = {
   tonic: 0,
 };
 
+// THESE PRICES WILL BE FETCHED FROM BACKEND
+const COLAPRICE = 12.8;
+const SPRITEPRICE = 8.2;
+const TONICPRICE = 2.4;
+
 const DrinksMenuPage = () => {
   const drinks = useSelector((state) => state.cart.drinks);
   const dispatch = useDispatch();
@@ -43,7 +48,8 @@ const DrinksMenuPage = () => {
 
   //TODO ADD some kind of user notification that items were added into cart
   const handleAddToBag = React.useCallback(
-    (id) => dispatch(addToCart({ id, value: drinksOrder[id] })),
+    (id, name, price) =>
+      dispatch(addToCart({ id, name, count: drinksOrder[id], price })),
     [drinksOrder, dispatch]
   );
 
@@ -69,7 +75,7 @@ const DrinksMenuPage = () => {
         onAddToBagClick={handleAddToBag}
         name="Coca Cola"
         count={drinksOrder.cocaCola}
-        price="12.80 €"
+        price={COLAPRICE}
       />
 
       <MenuItem3
@@ -79,7 +85,7 @@ const DrinksMenuPage = () => {
         onAddToBagClick={handleAddToBag}
         name="Sprite"
         count={drinksOrder.sprite}
-        price="8.20 €"
+        price={SPRITEPRICE}
       />
 
       <MenuItem3
@@ -89,7 +95,7 @@ const DrinksMenuPage = () => {
         onAddToBagClick={handleAddToBag}
         name="Tonic"
         count={drinksOrder.tonic}
-        price="4.20 €"
+        price={TONICPRICE}
       />
     </div>
   );

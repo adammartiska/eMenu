@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
-import { styled, Box } from "@mui/system";
+import { Box } from "@mui/system";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Counter from "./Counter";
 import "./MenuItem.css";
@@ -17,7 +17,7 @@ const MenuItem3 = ({
 }) => {
   const [expanded, setExpanded] = React.useState(false);
   const handleAddToBag = () => {
-    onAddToBagClick(id);
+    onAddToBagClick(id, name, price);
     setExpanded(false);
   };
   return (
@@ -41,7 +41,7 @@ const MenuItem3 = ({
         //variant="contained"
       >
         <div>{name}</div>
-        <div>{price}</div>
+        <div>{price} €</div>
       </Button>
       {expanded && (
         <>

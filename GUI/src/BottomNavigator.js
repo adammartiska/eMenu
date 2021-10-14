@@ -9,9 +9,7 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 
 const BottomNavigator = ({ onRouteChange, currentRoute }) => {
   const drinks = useSelector((state) => state.cart.drinks);
-  const detectCarItems = () => {
-    return Object.keys(drinks).length;
-  };
+  console.log(currentRoute);
   return (
     <BottomNavigation
       sx={{
@@ -59,16 +57,18 @@ const BottomNavigator = ({ onRouteChange, currentRoute }) => {
         component={Link}
         to="/cart"
         icon={
-          <Badge badgeContent={Object.keys(drinks).length} color="secondary">
+          <Badge
+            badgeContent={Object.keys(drinks).length}
+            color={
+              // this is kinda bad, TODO replace it with url content, but for now this is how MUI works
+              // returning index of route
+              currentRoute === 2 ? "onyx" : "secondary"
+            }
+          >
             <ShoppingBasketIcon />
           </Badge>
         }
       />
-      {/* <BottomNavigationAction label="Default" component={Link} to="/" />  
-        <Badge badgeContent={4} color="primary">
-<MailIcon color="action" />
-</Badge>
-        */}
     </BottomNavigation>
   );
 };
