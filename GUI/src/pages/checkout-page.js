@@ -1,6 +1,3 @@
-import MenuItem from "../components/MenuItem";
-import CartItem from "../components/CartItem";
-import MenuItem3 from "../components/MenuItem3";
 import Counter from "../components/Counter";
 import { useDispatch, useSelector } from "react-redux";
 import * as React from "react";
@@ -11,7 +8,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { addToCart } from "./drinksSlice";
+import { incrementCount, decrementCount } from "./drinksSlice";
 import "./drinks-menu-page.scss";
 
 const formatPrice = (price, count) => {
@@ -30,44 +27,16 @@ const initialState = {
 
 const DrinksMenuPage = () => {
   const drinks = useSelector((state) => state.cart.drinks);
-  console.log(drinks);
   const dispatch = useDispatch();
 
-  const [drinksOrder, setDrinksOrder] = React.useState(initialState);
-  //   const handleAddButtonClick = React.useCallback(
-  //     (id) =>
-  //       setDrinksOrder({
-  //         ...drinksOrder,
-  //         [id]: ++drinksOrder[id],
-  //       }),
-  //     [drinksOrder]
-  //   );
-
   const handleAddButtonClick = React.useCallback(
-    (id, name, price) =>
-      dispatch(
-        // modify only count of the cart
-        addToCart({
-          id,
-          name,
-          count: ++findRelevantDrink(drinks, id).count,
-          price,
-        })
-      ),
-    [drinksOrder, findRelevantDrink, dispatch, drinks]
+    (id) => dispatch(incrementCount(id)),
+    [dispatch]
   );
 
   const handleRemoveButtonClick = React.useCallback(
-    (id) => {
-      if (drinksOrder[id] === 0) {
-        return;
-      }
-      setDrinksOrder({
-        ...drinksOrder,
-        [id]: --drinksOrder[id],
-      });
-    },
-    [drinksOrder]
+    (id) => dispatch(decrementCount(id)),
+    [dispatch]
   );
 
   return (
@@ -90,7 +59,7 @@ const DrinksMenuPage = () => {
                 <Counter
                   id={id}
                   count={count}
-                  onAddButtonClick={() => handleAddButtonClick(id, name, price)}
+                  onAddButtonClick={() => handleAddButtonClick(id)}
                   onRemoveButtonClick={handleRemoveButtonClick}
                 />
               </TableCell>

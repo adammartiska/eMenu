@@ -9,7 +9,6 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 
 const BottomNavigator = ({ onRouteChange, currentRoute }) => {
   const drinks = useSelector((state) => state.cart.drinks);
-  console.log(currentRoute);
   return (
     <BottomNavigation
       sx={{

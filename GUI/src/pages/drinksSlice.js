@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const findRelevantDrinkIndex = (drinks, id) => {
+  console.log(drinks);
+  console.log(id);
+  const drinkIndex = drinks.findIndex((drink) => drink.id === id);
+  return drinks[drinkIndex];
+};
+
 export const drinksSlice = createSlice({
   name: "drinks",
   initialState: {
@@ -13,6 +20,17 @@ export const drinksSlice = createSlice({
       // immutable state based off those changes
       state.drinks = [...state.drinks, payload];
     },
+    incrementCount: (state, { payload }) => {
+      state.drinks[
+        state.drinks.findIndex((drink) => drink.id === payload)
+      ].count += 1;
+    },
+
+    decrementCount: (state, { payload }) => {
+      state.drinks[
+        state.drinks.findIndex((drink) => drink.id === payload)
+      ].count -= 1;
+    },
     // decrement: (state) => {
     //   state.value -= 1
     // },
@@ -23,6 +41,7 @@ export const drinksSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addToCart, decrement, incrementByAmount } = drinksSlice.actions;
+export const { addToCart, decrement, incrementCount, decrementCount } =
+  drinksSlice.actions;
 
 export default drinksSlice.reducer;
