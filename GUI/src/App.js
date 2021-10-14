@@ -7,11 +7,14 @@ import store from "./store";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import AppBar from "@mui/material/AppBar";
 import Typography from "@mui/material/Typography";
+import Badge from "@mui/material/Badge";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import { Provider } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import LocalBarIcon from "@mui/icons-material/LocalBar";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import BottomNavigator from "./BottomNavigator";
 import "./App.css";
 
 const theme = createTheme({
@@ -107,45 +110,10 @@ function App() {
                 <DrinksMenuPage />
               </Route>
             </Switch>
-            <BottomNavigation
-              sx={{
-                bgcolor: "onyx.main",
-                width: "100%",
-                position: "fixed",
-                bottom: 0,
-              }}
-              showLabels
-              value={value}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
-            >
-              <BottomNavigationAction
-                sx={{
-                  color: "onyx.font",
-                  "&.Mui-selected": {
-                    color: "secondary.main",
-                  },
-                }}
-                icon={<LocalBarIcon />}
-                label="Napoje"
-                component={Link}
-                to="/drinks"
-              />
-              <BottomNavigationAction
-                sx={{
-                  color: "onyx.font",
-                  "&.Mui-selected": {
-                    color: "secondary.main",
-                  },
-                }}
-                label="Jedla"
-                component={Link}
-                to="/food"
-                icon={<RestaurantIcon />}
-              />
-              {/* <BottomNavigationAction label="Default" component={Link} to="/" />  */}
-            </BottomNavigation>
+            <BottomNavigator
+              onRouteChange={(event, newValue) => setValue(newValue)}
+              currentRoute={value}
+            />
           </div>
         </Router>
       </ThemeProvider>

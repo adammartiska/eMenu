@@ -12,6 +12,7 @@ const initialState = {
   cocaCola: 0,
   sprite: 0,
   fanta: 0,
+  tonic: 0,
 };
 
 const DrinksMenuPage = () => {
@@ -79,6 +80,16 @@ const DrinksMenuPage = () => {
         name="Sprite"
         count={drinksOrder.sprite}
         price="8.20 €"
+      />
+
+      <MenuItem3
+        id="tonic"
+        onAddButtonClick={handleAddButtonClick}
+        onRemoveButtonClick={handleRemoveButtonClick}
+        onAddToBagClick={handleAddToBag}
+        name="Tonic"
+        count={drinksOrder.tonic}
+        price="4.20 €"
       />
     </div>
   );
