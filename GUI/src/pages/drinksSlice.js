@@ -1,12 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const findRelevantDrinkIndex = (drinks, id) => {
-  console.log(drinks);
-  console.log(id);
-  const drinkIndex = drinks.findIndex((drink) => drink.id === id);
-  return drinks[drinkIndex];
-};
-
 export const drinksSlice = createSlice({
   name: "drinks",
   initialState: {

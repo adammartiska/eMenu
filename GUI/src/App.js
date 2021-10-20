@@ -4,11 +4,10 @@ import FoodMenuPage from "./pages/food-menu-page";
 import DrinksMenuPage from "./pages/drinks-menu-page";
 import CheckoutPage from "./pages/checkout-page";
 import store from "./store";
-import AppBar from "@mui/material/AppBar";
-import Typography from "@mui/material/Typography";
 import { Provider } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import BottomNavigator from "./BottomNavigator";
+import Header from "./Header";
 import "./App.css";
 
 const theme = createTheme({
@@ -80,24 +79,7 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Router>
-          <AppBar
-            position="sticky"
-            color="onyx"
-            sx={{
-              marginTop: 0,
-              height: 55,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h6" color="inherit" component="div">
-              U stareho kokota
-            </Typography>
-            <Typography variant="subtitle2" color="inherit" component="div">
-              Clementisova 1589/31, Banovce nad Bebravou
-            </Typography>
-          </AppBar>
+          <Header />
           <div className="app-wrapper">
             <Switch>
               <Route path="/food">

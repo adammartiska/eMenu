@@ -1,6 +1,4 @@
 import React from "react";
-import MenuItem from "../components/MenuItem";
-import MenuItem2 from "../components/MenuItem2";
 import MenuItem3 from "../components/MenuItem3";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "./drinksSlice";
@@ -21,7 +19,7 @@ const SPRITEPRICE = 8.2;
 const TONICPRICE = 2.4;
 
 const DrinksMenuPage = () => {
-  const drinks = useSelector((state) => state.cart.drinks);
+  //const drinks = useSelector((state) => state.cart.drinks);
   const dispatch = useDispatch();
   const [drinksOrder, setDrinksOrder] = React.useState(initialState);
   const handleAddButtonClick = React.useCallback(

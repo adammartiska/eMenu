@@ -15,16 +15,6 @@ const formatPrice = (price, count) => {
   return `${(price * count).toFixed(2)} €`;
 };
 
-const findRelevantDrink = (drinks, id) =>
-  drinks.filter((drink) => drink.id !== id);
-
-const initialState = {
-  cocaCola: 0,
-  sprite: 0,
-  fanta: 0,
-  tonic: 0,
-};
-
 const DrinksMenuPage = () => {
   const drinks = useSelector((state) => state.cart.drinks);
   const dispatch = useDispatch();
