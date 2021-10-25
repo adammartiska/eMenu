@@ -3,16 +3,19 @@ import { useQuery, gql } from "@apollo/client";
 
 // define gql
 const DRINKS = gql`
-  query GetExchangeRates {
-    rates(currency: "USD") {
-      currency
-      rate
+  query GetSpaceX {
+    launchesPast(limit: 10) {
+      mission_name
+      launch_date_local
+      launch_site {
+        site_name_long
+      }
     }
   }
 `;
 
-export const useDrinks = ({}) => {
+export const useDrinks = () => {
   const { loading, error, data } = useQuery(DRINKS);
-
+  //todo further processing of the response
   return { loading, error, data };
 };

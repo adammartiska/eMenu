@@ -9,14 +9,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import BottomNavigator from "./BottomNavigator";
 import Header from "./Header";
 import "./App.css";
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "http://www.adamkopapricka.tech/",
+  uri: "https://api.spacex.land/graphql/",
   cache: new InMemoryCache(),
 });
 

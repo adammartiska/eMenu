@@ -2,6 +2,8 @@ import React from "react";
 import MenuItem3 from "../components/MenuItem3";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "./drinksSlice";
+import { useQuery, gql } from "@apollo/client";
+import { useDrinks } from "../hooks/useDrinks";
 import "./drinks-menu-page.scss";
 
 // STATE SHOULD BE OBJECT WITH KEYS AND THEIR QUANTITY
@@ -18,8 +20,26 @@ const COLAPRICE = 12.8;
 const SPRITEPRICE = 8.2;
 const TONICPRICE = 2.4;
 
+const DRINKS = gql`
+  query GetSpaceX {
+    launchesPast(limit: 10) {
+      mission_name
+      launch_date_local
+      launch_site {
+        site_name_long
+      }
+    }
+  }
+`;
+
 const DrinksMenuPage = () => {
   //const drinks = useSelector((state) => state.cart.drinks);
+  const { loading, error, data } = useDrinks();
+  React.useEffect(() => {
+    console.log(loading);
+    console.log(error);
+    console.log(data);
+  });
   const dispatch = useDispatch();
   const [drinksOrder, setDrinksOrder] = React.useState(initialState);
   const handleAddButtonClick = React.useCallback(
