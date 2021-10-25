@@ -9,6 +9,12 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import BottomNavigator from "./BottomNavigator";
 import Header from "./Header";
 import "./App.css";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "https://api.spacex.land/graphql/",
+  cache: new InMemoryCache(),
+});
 
 const theme = createTheme({
   //We can define App themes in here
@@ -76,30 +82,32 @@ const theme = createTheme({
 function App() {
   const [value, setValue] = React.useState("/");
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Header />
-          <div className="app-wrapper">
-            <Switch>
-              <Route path="/food">
-                <FoodMenuPage />
-              </Route>
-              <Route path="/drinks">
-                <DrinksMenuPage />
-              </Route>
-              <Route path="/cart">
-                <CheckoutPage />
-              </Route>
-            </Switch>
-            <BottomNavigator
-              onRouteChange={(event, newValue) => setValue(newValue)}
-              currentRoute={value}
-            />
-          </div>
-        </Router>
-      </ThemeProvider>
-    </Provider>
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <Router>
+            <Header />
+            <div className="app-wrapper">
+              <Switch>
+                <Route path="/food">
+                  <FoodMenuPage />
+                </Route>
+                <Route path="/drinks">
+                  <DrinksMenuPage />
+                </Route>
+                <Route path="/cart">
+                  <CheckoutPage />
+                </Route>
+              </Switch>
+              <BottomNavigator
+                onRouteChange={(event, newValue) => setValue(newValue)}
+                currentRoute={value}
+              />
+            </div>
+          </Router>
+        </ThemeProvider>
+      </Provider>
+    </ApolloProvider>
   );
 }
 
