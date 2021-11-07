@@ -12,7 +12,12 @@ import "./App.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "https://api.spacex.land/graphql/",
+  uri: "http://localhost:8000/graphql/",
+  //uri: "https://api.spacex.land/graphql/",
+  // fetchOptions: {
+  //   mode: "no-cors",
+  // },
+  //credentials: "same-origin",
   cache: new InMemoryCache(),
 });
 
