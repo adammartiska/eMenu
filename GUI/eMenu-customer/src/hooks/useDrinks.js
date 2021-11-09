@@ -13,7 +13,9 @@ import { useQuery, gql } from "@apollo/client";
 const MEALS = gql`
   query {
     meals {
-      id
+      id,
+      name,
+      price,
     }
   }
 `;

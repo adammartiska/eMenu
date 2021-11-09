@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "./drinksSlice";
 import { useQuery, gql } from "@apollo/client";
 import { useDrinks } from "../hooks/useDrinks";
+import { useDrinksQuery } from "../generated/graphql";
 import "./drinks-menu-page.scss";
 
 // STATE SHOULD BE OBJECT WITH KEYS AND THEIR QUANTITY
@@ -34,12 +35,13 @@ const DRINKS = gql`
 
 const DrinksMenuPage = () => {
   //const drinks = useSelector((state) => state.cart.drinks);
-  const { loading, error, data } = useDrinks();
+  const { data, error, loading } = useDrinksQuery();
+  //const { loading, error, data } = useDrinks();
   React.useEffect(() => {
     console.log(loading);
     console.log(error);
     console.log(data);
-  });
+  }, [loading, data, error]);
   const dispatch = useDispatch();
   const [drinksOrder, setDrinksOrder] = React.useState(initialState);
   const handleAddButtonClick = React.useCallback(
@@ -73,20 +75,18 @@ const DrinksMenuPage = () => {
 
   return (
     <div className="drinks-menu-page-wrapper">
-      {/* 
-
-        Another variants for menu items
-      <MenuItem name="Coca Cola" price="12.80" />
-      <MenuItem2
-        id="cocaCola"
-        onAddButtonClick={handleAddButtonClick}
-        onRemoveButtonClick={handleRemoveButtonClick}
-        onAddToBagClick={handleAddToBag}
-        name="Coca Cola"
-        count={drinksOrder.cocaCola}
-        price="12.80"
-      /> */}
-      <MenuItem3
+      {data?.drinks.map((drink) => (
+        <MenuItem3
+          id="cocaCola"
+          onAddButtonClick={handleAddButtonClick}
+          onRemoveButtonClick={handleRemoveButtonClick}
+          onAddToBagClick={handleAddToBag}
+          name={drink.name}
+          count={drinksOrder.cocaCola}
+          price={drink.price}
+        />
+      ))}
+      {/* <MenuItem3
         id="cocaCola"
         onAddButtonClick={handleAddButtonClick}
         onRemoveButtonClick={handleRemoveButtonClick}
@@ -114,7 +114,7 @@ const DrinksMenuPage = () => {
         name="Tonic"
         count={drinksOrder.tonic}
         price={TONICPRICE}
-      />
+      /> */}
     </div>
   );
 };
