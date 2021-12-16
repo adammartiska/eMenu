@@ -19,3 +19,16 @@ export const DRINKS = gql`
     }
   }
 `;
+
+export const SUBMIT = gql`
+  mutation createSuborder(
+    $suborder: SuborderInputType!
+    $meals: [MealInputType]
+    $drinks: [DrinkInputType]
+  ) {
+    createSuborder(suborder: $suborder, meals: $meals, drinks: $drinks) {
+      id
+      orderId
+    }
+  }
+`;
