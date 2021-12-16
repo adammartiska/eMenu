@@ -2,8 +2,7 @@ import React from "react";
 import MenuItem3 from "../components/MenuItem3";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "./drinksSlice";
-import { useQuery, gql } from "@apollo/client";
-import { useDrinks } from "../hooks/useDrinks";
+import { useDrinksQuery } from "../generated/graphql";
 import "./drinks-menu-page.scss";
 
 // STATE SHOULD BE OBJECT WITH KEYS AND THEIR QUANTITY
@@ -15,31 +14,14 @@ const initialState = {
   tonic: 0,
 };
 
-// THESE PRICES WILL BE FETCHED FROM BACKEND
-const COLAPRICE = 12.8;
-const SPRITEPRICE = 8.2;
-const TONICPRICE = 2.4;
-
-const DRINKS = gql`
-  query GetSpaceX {
-    launchesPast(limit: 10) {
-      mission_name
-      launch_date_local
-      launch_site {
-        site_name_long
-      }
-    }
-  }
-`;
-
 const DrinksMenuPage = () => {
   //const drinks = useSelector((state) => state.cart.drinks);
-  const { loading, error, data } = useDrinks();
+  const { data, error, loading } = useDrinksQuery();
   React.useEffect(() => {
     console.log(loading);
     console.log(error);
     console.log(data);
-  });
+  }, [loading, data, error]);
   const dispatch = useDispatch();
   const [drinksOrder, setDrinksOrder] = React.useState(initialState);
   const handleAddButtonClick = React.useCallback(
@@ -73,48 +55,18 @@ const DrinksMenuPage = () => {
 
   return (
     <div className="drinks-menu-page-wrapper">
-      {/* 
-
-        Another variants for menu items
-      <MenuItem name="Coca Cola" price="12.80" />
-      <MenuItem2
-        id="cocaCola"
-        onAddButtonClick={handleAddButtonClick}
-        onRemoveButtonClick={handleRemoveButtonClick}
-        onAddToBagClick={handleAddToBag}
-        name="Coca Cola"
-        count={drinksOrder.cocaCola}
-        price="12.80"
-      /> */}
-      <MenuItem3
-        id="cocaCola"
-        onAddButtonClick={handleAddButtonClick}
-        onRemoveButtonClick={handleRemoveButtonClick}
-        onAddToBagClick={handleAddToBag}
-        name="Coca Cola"
-        count={drinksOrder.cocaCola}
-        price={COLAPRICE}
-      />
-
-      <MenuItem3
-        id="sprite"
-        onAddButtonClick={handleAddButtonClick}
-        onRemoveButtonClick={handleRemoveButtonClick}
-        onAddToBagClick={handleAddToBag}
-        name="Sprite"
-        count={drinksOrder.sprite}
-        price={SPRITEPRICE}
-      />
-
-      <MenuItem3
-        id="tonic"
-        onAddButtonClick={handleAddButtonClick}
-        onRemoveButtonClick={handleRemoveButtonClick}
-        onAddToBagClick={handleAddToBag}
-        name="Tonic"
-        count={drinksOrder.tonic}
-        price={TONICPRICE}
-      />
+      {data?.drinks.map(({ id, name, price }) => (
+        <MenuItem3
+          key={id}
+          id={id}
+          onAddButtonClick={handleAddButtonClick}
+          onRemoveButtonClick={handleRemoveButtonClick}
+          onAddToBagClick={handleAddToBag}
+          name={name}
+          count={drinksOrder.cocaCola}
+          price={price}
+        />
+      ))}
     </div>
   );
 };
