@@ -26,6 +26,17 @@ const client = new ApolloClient({
 const queryClient = new QueryClient();
 
 const theme = createTheme({
+  typography: {
+    h6: {
+      fontSize: 14,
+    },
+    h5: {
+      fontSize: 15,
+    },
+    subtitle2: {
+      fontSize: 12,
+    },
+  },
   //We can define App themes in here
   status: {
     danger: "#e53e3e",
