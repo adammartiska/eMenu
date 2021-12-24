@@ -7,7 +7,6 @@ import CardActionArea from "@mui/material/CardActionArea";
 import Typography from "@mui/material/Typography";
 import "./MenuItem.css";
 import burgerUrl from "../static/burger.jpeg";
-import { createTheme } from "@mui/material/styles";
 
 const FoodCard = ({
   title = "Kralovsky burger",
@@ -24,7 +23,6 @@ const FoodCard = ({
       sx={{
         display: "flex",
         height: 110,
-        paddingVertical: 10,
         marginBottom: 1.5,
       }}
       {...rest}
@@ -36,13 +34,18 @@ const FoodCard = ({
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
+              paddingTop: 1,
+              paddingBottom: 1,
+              paddingLeft: 1.5,
+              paddingRight: 1,
             }}
           >
-            <div style={{ marginRight: 20 }}>
+            <div>
               <Typography
                 component="div"
                 variant="h5"
                 //TODO Why is sx prop adding extra margin and style prop not???
+                //because my default spacing is 8px can be adjusted in theme - responsiveness
                 style={{ marginBottom: 5 }}
               >
                 {title}
@@ -61,7 +64,7 @@ const FoodCard = ({
             </div>
             <CardMedia
               component="img"
-              sx={{ width: 90, height: 70 }}
+              sx={{ width: 80, height: 55, marginLeft: 1 }}
               image={image}
               //alt="Live from space album cover"
             />

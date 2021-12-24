@@ -1,5 +1,6 @@
 import AppBar from "@mui/material/AppBar";
 import Typography from "@mui/material/Typography";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
 const Header = () => {
   return (
@@ -8,18 +9,19 @@ const Header = () => {
       color="onyx"
       sx={{
         marginTop: 0,
-        height: 55,
+        height: 50,
         display: "flex",
-        justifyContent: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
         alignItems: "center",
+        paddingLeft: 2,
+        paddingRight: 2,
       }}
     >
-      <Typography variant="h6" color="inherit" component="div">
+      <Typography variant="h4" color="inherit" component="div">
         Eat And Meet
       </Typography>
-      <Typography variant="subtitle2" color="inherit" component="div">
-        Clementisova 1589/31, Banovce nad Bebravou
-      </Typography>
+      <NotificationsIcon />
     </AppBar>
   );
 };
