@@ -4,7 +4,10 @@ import { addToCart } from "./drinksSlice";
 import { useMealsQuery } from "../generated/graphql";
 import "./food-menu-page.scss";
 import FoodCard from "../components/FoodCard";
-import Drawer from "@mui/material/Drawer";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import burgerUrl from "./burger.jpeg";
 
 const FoodMenuPage = () => {
   const { data, error, loading } = useMealsQuery();
@@ -66,11 +69,42 @@ const FoodMenuPage = () => {
         />
       ))}
       <React.Fragment>
-        <Drawer anchor="bottom" open={showDrawer} onClose={toggleDrawer(false)}>
-          <div style={{ height: 80 }}>
-            ahojky otvoril si {currentlyOpenedMealId}
-          </div>
-        </Drawer>
+        <SwipeableDrawer
+          anchor="bottom"
+          open={showDrawer}
+          onClose={toggleDrawer(false)}
+          sx={{
+            "& .MuiPaper-root": {
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+            },
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+          }}
+        >
+          <Box
+            sx={{
+              // borderTopLeftRadius: 8,
+              // borderTopRightRadius: 8,
+              // height: 500,
+              // width: "auto",
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+              visibility: "visible",
+            }}
+            role="presentation"
+            //onClick={toggleDrawer(anchor, false)}
+            //onKeyDown={toggleDrawer(anchor, false)}
+          >
+            <Paper variant="outlined">
+              <img
+                style={{ width: "100%", height: 200, borderTopLeftRadius: 20 }}
+                src={burgerUrl}
+                alt="burger"
+              />
+            </Paper>
+          </Box>
+        </SwipeableDrawer>
       </React.Fragment>
     </div>
   );
