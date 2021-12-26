@@ -9,6 +9,11 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+import TextField from "@mui/material/TextField";
+import Divider from "@mui/material/Divider";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import burgerUrl from "./burger.jpeg";
 import Counter from "../components/Counter";
@@ -17,6 +22,9 @@ const FoodMenuPage = () => {
   const { data, error, loading } = useMealsQuery();
   const [mealOrder, setMealOrder] = React.useState({});
   const [showDrawer, setShowDrawer] = React.useState(false);
+  const [isAdditionalOrderInfo, setIsAdditionalOrderInfo] =
+    React.useState(false);
+  const [additionalorderInfo, setAdditionalOrderInfo] = React.useState("");
   const [currentlyOpenedMealId, setCurrentlyOpenedMealId] =
     React.useState(null);
   const dispatch = useDispatch();
@@ -49,6 +57,8 @@ const FoodMenuPage = () => {
     },
     [mealOrder]
   );
+
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   //TODO ADD some kind of user notification that items were added into cart
   const handleAddToBag = React.useCallback(
@@ -136,6 +146,40 @@ const FoodMenuPage = () => {
                 100 % hovadzie maso, domaca slaninka, vajicko, majoneza,
                 ponozky, belgicke hranolky, domaci syrovy dip
               </Typography>
+              <FormControlLabel
+                checked={isAdditionalOrderInfo}
+                size="small"
+                control={<Checkbox defaultChecked />}
+                label={
+                  <Typography variant="body2" color="textSecondary">
+                    Pridat specialnu poziadavku
+                  </Typography>
+                }
+                onChange={() =>
+                  setIsAdditionalOrderInfo(!isAdditionalOrderInfo)
+                }
+                // sx={{ width: "0%" }}
+              />
+              {/* <TextareaAutosize
+                aria-label="minimum height"
+                minRows={3}
+                placeholder="Minimum 3 rows"
+                style={{ width: "100%" }}
+              /> */}
+              {isAdditionalOrderInfo && (
+                <TextField
+                  id="outlined-multiline-flexible"
+                  //placeholder="Multiline"
+                  multiline
+                  maxRows={5}
+                  sx={{ width: "100%" }}
+                  inputProps={{ style: { fontSize: 12 } }}
+                  //value={additionalorderInfo}
+                  //onChange={handleChange}
+                  onBlur={(e) => setAdditionalOrderInfo(e.target.value)}
+                />
+              )}
+              {/* <Divider variant="middle" sx={{ bgcolor: "onyxDarker.main" }} /> */}
               <div
                 style={{
                   marginTop: 20,
