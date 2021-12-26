@@ -27,6 +27,7 @@ const FoodMenuPage = () => {
   const [additionalorderInfo, setAdditionalOrderInfo] = React.useState("");
   const [currentlyOpenedMealId, setCurrentlyOpenedMealId] =
     React.useState(null);
+  const [currentMealCount, setCurrentMealCount] = React.useState(1);
   const dispatch = useDispatch();
 
   const toggleDrawer =
@@ -34,8 +35,9 @@ const FoodMenuPage = () => {
     (event) => {
       if (open) {
         setIsAdditionalOrderInfo(false);
-        setCurrentlyOpenedMealId(null);
+        setCurrentMealCount(1);
       }
+      setCurrentlyOpenedMealId(id);
       setShowDrawer(open);
     };
 
@@ -61,13 +63,13 @@ const FoodMenuPage = () => {
     [mealOrder]
   );
 
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
   //TODO ADD some kind of user notification that items were added into cart
   const handleAddToBag = React.useCallback(
-    (id, name, price) =>
-      dispatch(addToCart({ id, name, count: mealOrder[id], price })),
-    [mealOrder, dispatch]
+    () =>
+      dispatch(
+        addToCart({ id: currentlyOpenedMealId, count: currentMealCount })
+      ),
+    [currentlyOpenedMealId, currentMealCount, dispatch]
   );
   return (
     <div className="food-menu-page-wrapper">
@@ -194,9 +196,16 @@ const FoodMenuPage = () => {
               >
                 <Counter
                   id={currentlyOpenedMealId}
-                  //count={count}
-                  // onAddButtonClick={() => handleAddButtonClick(id)}
-                  // onRemoveButtonClick={handleRemoveButtonClick}
+                  count={currentMealCount}
+                  onAddButtonClick={() =>
+                    setCurrentMealCount(currentMealCount + 1)
+                  }
+                  onRemoveButtonClick={() => {
+                    if (currentMealCount === 1) {
+                      return;
+                    }
+                    setCurrentMealCount(currentMealCount - 1);
+                  }}
                 />
                 <Button
                   onClick={handleAddToBag}
