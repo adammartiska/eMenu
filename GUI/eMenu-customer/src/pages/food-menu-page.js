@@ -32,8 +32,11 @@ const FoodMenuPage = () => {
   const toggleDrawer =
     (open, id = null) =>
     (event) => {
+      if (open) {
+        setIsAdditionalOrderInfo(false);
+        setCurrentlyOpenedMealId(null);
+      }
       setShowDrawer(open);
-      setCurrentlyOpenedMealId(id);
     };
 
   const handleAddButtonClick = React.useCallback(
@@ -149,7 +152,7 @@ const FoodMenuPage = () => {
               <FormControlLabel
                 checked={isAdditionalOrderInfo}
                 size="small"
-                control={<Checkbox defaultChecked />}
+                control={<Checkbox />}
                 label={
                   <Typography variant="body2" color="textSecondary">
                     Pridat specialnu poziadavku
