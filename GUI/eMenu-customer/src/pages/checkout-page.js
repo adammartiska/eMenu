@@ -9,6 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { incrementCount, decrementCount } from "./drinksSlice";
+import { getMealById } from "../utils/utils";
 import "./drinks-menu-page.scss";
 
 const formatPrice = (price, count) => {
@@ -17,9 +18,10 @@ const formatPrice = (price, count) => {
 
 const DrinksMenuPage = () => {
   const drinks = useSelector((state) => state?.drinks?.drinkOrder);
-  const meals = useSelector((state) => state?.meals?.mealOrder);
+  const mealsOrder = useSelector((state) => state?.meals?.mealOrder);
+  //TODO WTF???
+  const meals = useSelector((state) => state?.meals?.meals?.meals);
   const dispatch = useDispatch();
-  console.log(meals);
 
   const handleAddButtonClick = React.useCallback(
     (id) => dispatch(incrementCount(id)),
@@ -42,22 +44,25 @@ const DrinksMenuPage = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {meals.map(({ id, name, count, price }) => (
-            <TableRow key={name}>
-              <TableCell component="th" scope="row">
-                {name}
-              </TableCell>
-              <TableCell align="center">
-                <Counter
-                  id={id}
-                  count={count}
-                  onAddButtonClick={() => handleAddButtonClick(id)}
-                  onRemoveButtonClick={handleRemoveButtonClick}
-                />
-              </TableCell>
-              <TableCell align="right">{formatPrice(price, count)}</TableCell>
-            </TableRow>
-          ))}
+          {mealsOrder.map(({ id, count }) => {
+            const { name, price } = getMealById(id, meals);
+            return (
+              <TableRow key={name}>
+                <TableCell component="th" scope="row">
+                  {name}
+                </TableCell>
+                <TableCell align="center">
+                  <Counter
+                    id={id}
+                    count={count}
+                    onAddButtonClick={() => handleAddButtonClick(id)}
+                    onRemoveButtonClick={handleRemoveButtonClick}
+                  />
+                </TableCell>
+                <TableCell align="right">{formatPrice(price, count)}</TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>
