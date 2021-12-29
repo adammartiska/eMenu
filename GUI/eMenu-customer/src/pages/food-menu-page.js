@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "./drinksSlice";
+import { addToCart, cacheMeals } from "./mealsSlice";
 import { useMealsQuery } from "../generated/graphql";
 import "./food-menu-page.scss";
 import FoodCard from "../components/FoodCard";
@@ -19,7 +19,7 @@ import burgerUrl from "./burger.jpeg";
 import Counter from "../components/Counter";
 
 const FoodMenuPage = () => {
-  const { data, error, loading } = useMealsQuery();
+  const { data: meals, error, loading } = useMealsQuery();
   const [mealOrder, setMealOrder] = React.useState({});
   const [showDrawer, setShowDrawer] = React.useState(false);
   const [isAdditionalOrderInfo, setIsAdditionalOrderInfo] =
@@ -40,6 +40,10 @@ const FoodMenuPage = () => {
       setCurrentlyOpenedMealId(id);
       setShowDrawer(open);
     };
+  React.useEffect(() => {
+    // cache meals once its data is loaded
+    dispatch(cacheMeals(meals));
+  }, [meals, dispatch]);
 
   const handleAddButtonClick = React.useCallback(
     (id) =>
@@ -73,7 +77,7 @@ const FoodMenuPage = () => {
   );
   return (
     <div className="food-menu-page-wrapper">
-      {data?.meals.map(({ id, name, price }) => (
+      {meals?.meals.map(({ id, name, price }) => (
         <FoodCard
           key={id}
           id={id}

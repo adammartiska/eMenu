@@ -1,7 +1,7 @@
 import React from "react";
 import MenuItem3 from "../components/MenuItem3";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "./drinksSlice";
+import { addToCart, cacheDrinks } from "./drinksSlice";
 import { useDrinksQuery } from "../generated/graphql";
 import "./drinks-menu-page.scss";
 
@@ -16,12 +16,8 @@ const initialState = {
 
 const DrinksMenuPage = () => {
   //const drinks = useSelector((state) => state.cart.drinks);
-  const { data, error, loading } = useDrinksQuery();
-  React.useEffect(() => {
-    console.log(loading);
-    console.log(error);
-    console.log(data);
-  }, [loading, data, error]);
+  const { data: drinks, error, loading } = useDrinksQuery();
+
   const dispatch = useDispatch();
   const [drinksOrder, setDrinksOrder] = React.useState(initialState);
   const handleAddButtonClick = React.useCallback(
@@ -32,6 +28,11 @@ const DrinksMenuPage = () => {
       }),
     [drinksOrder]
   );
+
+  React.useEffect(() => {
+    // cache meals once its data is loaded
+    dispatch(cacheDrinks(drinks));
+  }, [drinks, dispatch]);
 
   const handleRemoveButtonClick = React.useCallback(
     (id) => {
@@ -55,7 +56,7 @@ const DrinksMenuPage = () => {
 
   return (
     <div className="drinks-menu-page-wrapper">
-      {data?.drinks.map(({ id, name, price }) => (
+      {drinks?.drinks.map(({ id, name, price }) => (
         <MenuItem3
           key={id}
           id={id}

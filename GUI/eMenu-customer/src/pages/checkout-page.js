@@ -16,8 +16,10 @@ const formatPrice = (price, count) => {
 };
 
 const DrinksMenuPage = () => {
-  const drinks = useSelector((state) => state.cart.drinks);
+  const drinks = useSelector((state) => state?.drinks?.drinkOrder);
+  const meals = useSelector((state) => state?.meals?.mealOrder);
   const dispatch = useDispatch();
+  console.log(meals);
 
   const handleAddButtonClick = React.useCallback(
     (id) => dispatch(incrementCount(id)),
@@ -40,7 +42,7 @@ const DrinksMenuPage = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {drinks.map(({ id, name, count, price }) => (
+          {meals.map(({ id, name, count, price }) => (
             <TableRow key={name}>
               <TableCell component="th" scope="row">
                 {name}
