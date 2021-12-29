@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, cacheMeals } from "./mealsSlice";
 import { useMealsQuery } from "../generated/graphql";
+import { find } from "ramda";
 import "./food-menu-page.scss";
 import FoodCard from "../components/FoodCard";
 import Box from "@mui/material/Box";
@@ -16,9 +17,11 @@ import TextField from "@mui/material/TextField";
 import Divider from "@mui/material/Divider";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import burgerUrl from "./burger.jpeg";
+import { getMealById } from "../utils/utils";
 import Counter from "../components/Counter";
 
 const FoodMenuPage = () => {
+  const mealsOrder = useSelector((state) => state?.meals?.mealOrder);
   const { data: meals, error, loading } = useMealsQuery();
   const [mealOrder, setMealOrder] = React.useState({});
   const [showDrawer, setShowDrawer] = React.useState(false);
@@ -29,13 +32,13 @@ const FoodMenuPage = () => {
     React.useState(null);
   const [currentMealCount, setCurrentMealCount] = React.useState(1);
   const dispatch = useDispatch();
-
   const toggleDrawer =
     (open, id = null) =>
     (event) => {
       if (open) {
+        const maybeMeal = getMealById(id, mealsOrder);
         setIsAdditionalOrderInfo(false);
-        setCurrentMealCount(1);
+        setCurrentMealCount(maybeMeal?.count ?? 1);
       }
       setCurrentlyOpenedMealId(id);
       setShowDrawer(open);
