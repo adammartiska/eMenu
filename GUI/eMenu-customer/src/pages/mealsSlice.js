@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { propEq } from "ramda";
 
 export const mealsSlice = createSlice({
   name: "meals",
@@ -15,7 +16,12 @@ export const mealsSlice = createSlice({
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state.mealOrder = [...state.mealOrder, payload];
+      const index = state.mealOrder.findIndex((meal) => meal.id === payload.id);
+      if (index !== -1) {
+        state.mealOrder[index] = payload;
+      } else {
+        state.mealOrder = [...state.mealOrder, payload];
+      }
     },
     incrementCount: (state, { payload }) => {
       state.drinks[
