@@ -1,6 +1,7 @@
 import Counter from "../components/Counter";
 import { useDispatch, useSelector } from "react-redux";
 import * as React from "react";
+import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -34,38 +35,65 @@ const DrinksMenuPage = () => {
   );
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="caption table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Polozka</TableCell>
-            <TableCell align="center">Mnozstvo</TableCell>
-            <TableCell align="right">Cena</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {mealsOrder.map(({ id, count }) => {
-            const { name, price } = getMealById(id, meals);
-            return (
-              <TableRow key={name}>
-                <TableCell component="th" scope="row">
-                  {name}
-                </TableCell>
-                <TableCell align="center">
-                  <Counter
-                    id={id}
-                    count={count}
-                    onAddButtonClick={() => handleAddButtonClick(id)}
-                    onRemoveButtonClick={handleRemoveButtonClick}
-                  />
-                </TableCell>
-                <TableCell align="right">{formatPrice(price, count)}</TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <TableContainer component={Paper}>
+        <Table aria-label="caption table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Polozka</TableCell>
+              <TableCell align="center">Mnozstvo</TableCell>
+              <TableCell align="right">Cena</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {mealsOrder.map(({ id, count }) => {
+              const { name, price } = getMealById(id, meals);
+              return (
+                <TableRow key={name}>
+                  <TableCell component="th" scope="row">
+                    {name}
+                  </TableCell>
+                  <TableCell align="center">
+                    <Counter
+                      id={id}
+                      count={count}
+                      onAddButtonClick={() => handleAddButtonClick(id)}
+                      onRemoveButtonClick={handleRemoveButtonClick}
+                    />
+                  </TableCell>
+                  <TableCell align="right">
+                    {formatPrice(price, count)}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Button
+        //onClick={handleAddToBag}
+        color="onyx"
+        variant="contained"
+        //endIcon={<AddShoppingCartIcon />}git
+        sx={{
+          justifyContent: "center",
+          alignItems: "center",
+          textTransform: "none",
+          height: 35,
+          bgcolor: "onyx",
+          marginTop: 6,
+        }}
+      >
+        Objednat
+      </Button>
+    </div>
   );
 };
 
