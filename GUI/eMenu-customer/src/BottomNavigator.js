@@ -9,6 +9,7 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 
 const BottomNavigator = ({ onRouteChange, currentRoute }) => {
   const drinks = useSelector((state) => state.drinks.drinkOrder);
+  const meals = useSelector((state) => state.meals.mealOrder);
   return (
     <BottomNavigation
       sx={{
@@ -57,7 +58,9 @@ const BottomNavigator = ({ onRouteChange, currentRoute }) => {
         to="/cart"
         icon={
           <Badge
-            badgeContent={Object.keys(drinks).length}
+            badgeContent={
+              Object.keys(drinks).length + Object.keys(meals).length
+            }
             color={
               // this is kinda bad, TODO replace it with url content, but for now this is how MUI works
               // returning index of route

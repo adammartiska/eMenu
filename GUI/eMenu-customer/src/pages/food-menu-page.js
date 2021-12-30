@@ -71,13 +71,10 @@ const FoodMenuPage = () => {
   );
 
   //TODO ADD some kind of user notification that items were added into cart
-  const handleAddToBag = React.useCallback(
-    () =>
-      dispatch(
-        addToCart({ id: currentlyOpenedMealId, count: currentMealCount })
-      ),
-    [currentlyOpenedMealId, currentMealCount, dispatch]
-  );
+  const handleAddToBag = React.useCallback(() => {
+    dispatch(addToCart({ id: currentlyOpenedMealId, count: currentMealCount }));
+    setShowDrawer(false);
+  }, [currentlyOpenedMealId, currentMealCount, dispatch]);
   return (
     <div className="food-menu-page-wrapper">
       {meals?.meals.map(({ id, name, price }) => (
