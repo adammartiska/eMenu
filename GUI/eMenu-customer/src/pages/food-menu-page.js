@@ -137,7 +137,11 @@ const FoodMenuPage = () => {
             />
             <Paper variant="outlined">
               <img
-                style={{ width: "100%", height: 200, borderTopLeftRadius: 20 }}
+                style={{
+                  width: "100%",
+                  height: 220,
+                  borderTopLeftRadius: 20,
+                }}
                 src={burgerUrl}
                 alt="burger"
               />

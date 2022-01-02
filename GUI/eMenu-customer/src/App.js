@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import FoodMenuPage from "./pages/food-menu-page";
 import DrinksMenuPage from "./pages/drinks-menu-page";
 import CheckoutPage from "./pages/checkout-page";
+import OrderStatePage from "./pages/order-state-page";
 import store from "./store";
 import { Provider } from "react-redux";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -121,6 +122,9 @@ function App() {
                   </Route>
                   <Route path="/cart">
                     <CheckoutPage />
+                  </Route>
+                  <Route path="/orderInformation">
+                    <OrderStatePage />
                   </Route>
                 </Switch>
                 <BottomNavigator

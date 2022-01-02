@@ -1,6 +1,8 @@
 import AppBar from "@mui/material/AppBar";
 import Typography from "@mui/material/Typography";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { Link as RouterLink } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 const Header = () => {
   return (
@@ -21,7 +23,12 @@ const Header = () => {
       <Typography variant="h4" color="inherit" component="div">
         Eat And Meet
       </Typography>
-      <NotificationsIcon />
+      <Button component={RouterLink} to="/orderInformation">
+        <NotificationsIcon
+          sx={{ color: "black" }}
+          onClick={() => console.log("ok")}
+        />
+      </Button>
     </AppBar>
   );
 };
