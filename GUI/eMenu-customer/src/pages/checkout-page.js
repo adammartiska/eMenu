@@ -11,6 +11,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { incrementCount, decrementCount } from "./drinksSlice";
 import { getMealById } from "../utils/utils";
+import { useCreateSuborderMutation } from "../generated/graphql";
 import "./drinks-menu-page.scss";
 
 const formatPrice = (price, count) => {
@@ -18,6 +19,15 @@ const formatPrice = (price, count) => {
 };
 
 const DrinksMenuPage = () => {
+  const [createSuborderMutation, { data, loading, error }] =
+    useCreateSuborderMutation({
+      variables: {
+        tableId: 17,
+        meals: [{ id: 1, count: 2 }],
+        drinks: [{ id: 1, count: 3 }],
+        token: "bpTtlPuC",
+      },
+    });
   const drinks = useSelector((state) => state?.drinks?.drinkOrder);
   const mealsOrder = useSelector((state) => state?.meals?.mealOrder);
   //TODO WTF???
@@ -33,6 +43,13 @@ const DrinksMenuPage = () => {
     (id) => dispatch(decrementCount(id)),
     [dispatch]
   );
+
+  const submitOrder = React.useCallback(async () => {
+    const response = await createSuborderMutation();
+    console.log(response);
+    console.log(data);
+    console.log(error);
+  }, [createSuborderMutation, data, error]);
 
   return (
     <div
@@ -78,7 +95,7 @@ const DrinksMenuPage = () => {
         </Table>
       </TableContainer>
       <Button
-        //onClick={handleAddToBag}
+        onClick={submitOrder}
         color="onyx"
         variant="contained"
         //endIcon={<AddShoppingCartIcon />}git

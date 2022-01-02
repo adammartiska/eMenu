@@ -27,7 +27,7 @@ const FoodMenuPage = () => {
   const [showDrawer, setShowDrawer] = React.useState(false);
   const [isAdditionalOrderInfo, setIsAdditionalOrderInfo] =
     React.useState(false);
-  const [additionalorderInfo, setAdditionalOrderInfo] = React.useState("");
+  const [additionalorderInfo, setAdditionalOrderInfo] = React.useState(null);
   const [currentlyOpenedMealId, setCurrentlyOpenedMealId] =
     React.useState(null);
   const [currentMealCount, setCurrentMealCount] = React.useState(1);
@@ -72,9 +72,15 @@ const FoodMenuPage = () => {
 
   //TODO ADD some kind of user notification that items were added into cart
   const handleAddToBag = React.useCallback(() => {
-    dispatch(addToCart({ id: currentlyOpenedMealId, count: currentMealCount }));
+    dispatch(
+      addToCart({
+        id: currentlyOpenedMealId,
+        count: currentMealCount,
+        additionalorderInfo,
+      })
+    );
     setShowDrawer(false);
-  }, [currentlyOpenedMealId, currentMealCount, dispatch]);
+  }, [currentlyOpenedMealId, currentMealCount, additionalorderInfo, dispatch]);
   return (
     <div className="food-menu-page-wrapper">
       {meals?.meals.map(({ id, name, price }) => (

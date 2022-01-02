@@ -10,7 +10,7 @@ import burgerUrl from "../static/burger.jpeg";
 
 const FoodCard = ({
   title = "Kralovsky burger",
-  description = "100 % hovadzie maso, domaca slaninka, vajicko, majoneza, ponozky a rozne ...",
+  description = "100 % hovadzie maso, domaca slaninka, vajicko, majoneza, ponozky a rozne ine suroviny aj tak sem len pisem zbytocne dlhy text",
   price,
   image = burgerUrl,
   onClick,
@@ -54,6 +54,12 @@ const FoodCard = ({
                 variant="subtitle2"
                 color="text.secondary"
                 component="div"
+                sx={{
+                  display: "-webkit-box",
+                  overflow: "hidden",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2,
+                }}
                 style={{ marginBottom: 5 }}
               >
                 {description}
@@ -64,7 +70,7 @@ const FoodCard = ({
             </div>
             <CardMedia
               component="img"
-              sx={{ width: 80, height: 55, marginLeft: 1 }}
+              sx={{ width: 80, height: 55, marginLeft: 2 }}
               image={image}
               //alt="Live from space album cover"
             />
