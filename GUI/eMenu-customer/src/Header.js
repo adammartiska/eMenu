@@ -24,10 +24,7 @@ const Header = () => {
         Eat And Meet
       </Typography>
       <Button component={RouterLink} to="/orderInformation">
-        <NotificationsIcon
-          sx={{ color: "black" }}
-          onClick={() => console.log("ok")}
-        />
+        <NotificationsIcon sx={{ color: "black" }} />
       </Button>
     </AppBar>
   );

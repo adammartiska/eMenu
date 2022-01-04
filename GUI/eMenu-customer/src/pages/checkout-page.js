@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 import { incrementCount, decrementCount } from "./drinksSlice";
 import { getMealById } from "../utils/utils";
 import { useCreateSuborderMutation } from "../generated/graphql";
+import { saveToken } from "./userSlice";
 import "./drinks-menu-page.scss";
 
 const formatPrice = (price, count) => {
@@ -22,13 +23,13 @@ const DrinksMenuPage = () => {
   const [createSuborderMutation, { data, loading, error }] =
     useCreateSuborderMutation({
       variables: {
-        tableId: 17,
-        meals: [{ id: 1, count: 2 }],
-        drinks: [{ id: 1, count: 3 }],
+        tableId: 19,
+        meals: [{ id: 2, count: 2 }],
+        drinks: [{ id: 34, count: 3 }],
         token: "bpTtlPuC",
       },
     });
-  const drinks = useSelector((state) => state?.drinks?.drinkOrder);
+  const drinksOrder = useSelector((state) => state?.drinks?.drinkOrder);
   const mealsOrder = useSelector((state) => state?.meals?.mealOrder);
   //TODO WTF???
   const meals = useSelector((state) => state?.meals?.meals?.meals);
@@ -45,11 +46,15 @@ const DrinksMenuPage = () => {
   );
 
   const submitOrder = React.useCallback(async () => {
+    console.log(drinksOrder);
+    console.log(mealsOrder);
     const response = await createSuborderMutation();
-    console.log(response);
+    //IF THERE IS NO ERROR
+    dispatch(saveToken(response?.data?.createSuborder?.token));
+    console.log(response.data?.createSuborder?.token);
     console.log(data);
     console.log(error);
-  }, [createSuborderMutation, data, error]);
+  }, [createSuborderMutation, data, error, drinksOrder, mealsOrder, dispatch]);
 
   return (
     <div

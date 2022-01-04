@@ -1,14 +1,8 @@
 import Counter from "../components/Counter";
 import { useDispatch, useSelector } from "react-redux";
 import * as React from "react";
-import Button from "@mui/material/Button";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 import { incrementCount, decrementCount } from "./drinksSlice";
 import { getMealById } from "../utils/utils";
 import { useCreateSuborderMutation } from "../generated/graphql";
@@ -55,12 +49,31 @@ const OrderStatePage = () => {
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignItems: "space-between",
       }}
     >
-      Winning
+      <Typography
+        component="div"
+        variant="h4"
+        //TODO Why is sx prop adding extra margin and style prop not???
+        //because my default spacing is 8px can be adjusted in theme - responsiveness
+        sx={{ fontSize: 20 }}
+      >
+        Stav objednavky
+      </Typography>
+      <Typography
+        component="div"
+        variant="h4"
+        //TODO Why is sx prop adding extra margin and style prop not???
+        //because my default spacing is 8px can be adjusted in theme - responsiveness
+        sx={{ fontSize: 20, bgcolor: "orange", padding: 2, borderRadius: 2 }}
+      >
+        Prijata
+      </Typography>
+      <Divider variant="middle" flexItem />
+      <div>ahoj</div>
       {/* <TableContainer component={Paper}>
         <Table aria-label="caption table">
           <TableHead>
