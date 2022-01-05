@@ -37,7 +37,7 @@ const MenuItem3 = ({
           flexDirection: "row",
           justifyContent: "space-between",
         }}
-        fullWidth
+        //fullWidth
         //variant="contained"
       >
         <div>{name}</div>

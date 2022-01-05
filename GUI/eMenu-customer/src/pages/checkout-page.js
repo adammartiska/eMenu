@@ -19,18 +19,21 @@ const formatPrice = (price, count) => {
   return `${(price * count).toFixed(2)} €`;
 };
 
-const DrinksMenuPage = () => {
+const CheckoutPage = () => {
+  //const [tableId, setTableId] = React.useState(Math.rand());
+  const userToken = useSelector((state) => state?.user?.token);
+  const drinksOrder = useSelector((state) => state?.drinks?.drinkOrder);
+  const mealsOrder = useSelector((state) => state?.meals?.mealOrder);
   const [createSuborderMutation, { data, loading, error }] =
     useCreateSuborderMutation({
       variables: {
-        tableId: 19,
-        meals: [{ id: 2, count: 2 }],
-        drinks: [{ id: 34, count: 3 }],
-        token: "bpTtlPuC",
+        tableId: 123,
+        meals: mealsOrder,
+        drinks: drinksOrder,
+        //below is random token with length of our token, received token will be different
+        token: userToken ?? "vDso4eBx",
       },
     });
-  const drinksOrder = useSelector((state) => state?.drinks?.drinkOrder);
-  const mealsOrder = useSelector((state) => state?.meals?.mealOrder);
   //TODO WTF???
   const meals = useSelector((state) => state?.meals?.meals?.meals);
   const dispatch = useDispatch();
@@ -46,15 +49,15 @@ const DrinksMenuPage = () => {
   );
 
   const submitOrder = React.useCallback(async () => {
-    console.log(drinksOrder);
-    console.log(mealsOrder);
     const response = await createSuborderMutation();
-    //IF THERE IS NO ERROR
-    dispatch(saveToken(response?.data?.createSuborder?.token));
-    console.log(response.data?.createSuborder?.token);
-    console.log(data);
-    console.log(error);
-  }, [createSuborderMutation, data, error, drinksOrder, mealsOrder, dispatch]);
+    if (response?.data) {
+      dispatch(saveToken(response?.data?.createSuborder?.token));
+      console.log(response);
+      console.log(data);
+      console.log(error);
+      console.log(userToken);
+    }
+  }, [createSuborderMutation, data, error, dispatch, userToken]);
 
   return (
     <div
@@ -119,4 +122,4 @@ const DrinksMenuPage = () => {
   );
 };
 
-export default DrinksMenuPage;
+export default CheckoutPage;

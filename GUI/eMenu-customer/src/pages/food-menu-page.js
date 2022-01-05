@@ -76,7 +76,7 @@ const FoodMenuPage = () => {
       addToCart({
         id: currentlyOpenedMealId,
         count: currentMealCount,
-        additionalorderInfo,
+        additionalorderInfo: additionalorderInfo ?? undefined,
       })
     );
     setShowDrawer(false);
