@@ -126,8 +126,9 @@ export const SwipeableBottomDrawer = ({
               component="div"
               style={{ marginBlock: 5 }}
             >
-              100 % hovadzie maso, domaca slaninka, vajicko, majoneza, ponozky,
-              belgicke hranolky, domaci syrovy dip
+              {isMeal
+                ? "100 % hovadzie maso, domaca slaninka, vajicko, majoneza, ponozky, belgicke hranolky, domaci syrovy dip"
+                : `${currentlySelectedItem?.amount} L`}
             </Typography>
             <FormControlLabel
               checked={isAdditionalOrderInfo}

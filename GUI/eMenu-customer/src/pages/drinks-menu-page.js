@@ -60,7 +60,7 @@ const DrinksMenuPage = () => {
 
   return (
     <div className="drinks-menu-page-wrapper">
-      {data?.drinks.map(({ id, name, price }) => (
+      {data?.drinks.map(({ id, name, price, amount }) => (
         <DrinkCard
           key={id}
           id={id}
@@ -74,6 +74,7 @@ const DrinksMenuPage = () => {
           title={name}
           count={drinksOrder.cocaCola}
           price={price}
+          amount={amount}
         />
       ))}
       <SwipeableBottomDrawer

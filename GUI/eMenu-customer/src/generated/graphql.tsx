@@ -1,10 +1,16 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -15,128 +21,183 @@ export type Scalars = {
 };
 
 export type CreateSuborder = {
-  __typename?: 'CreateSuborder';
+  __typename?: "CreateSuborder";
   createSuborder?: Maybe<OrderType>;
 };
 
-
 export type CreateSuborderCreateSuborderArgs = {
   suborder: SuborderInputType;
-  token: Scalars['String'];
+  token: Scalars["String"];
 };
 
 export type DrinkType = {
-  __typename?: 'DrinkType';
+  __typename?: "DrinkType";
   /** Amount of drink measured in stored unit */
-  amount: Scalars['Float'];
+  amount: Scalars["Float"];
   /** Drink Id */
-  id: Scalars['Int'];
+  id: Scalars["Int"];
   /** Drink Name */
-  name: Scalars['String'];
+  name: Scalars["String"];
   /** Drink Price */
-  price: Scalars['Float'];
+  price: Scalars["Float"];
   type?: Maybe<MealTypeEnumType>;
   /** Unit in which is Amount stated */
-  unit: Scalars['String'];
+  unit: Scalars["String"];
 };
 
 export type MealInputType = {
-  count: Scalars['Int'];
-  id: Scalars['Int'];
+  count: Scalars["Int"];
+  id: Scalars["Int"];
 };
 
 export type MealType = {
-  __typename?: 'MealType';
+  __typename?: "MealType";
   /** Meal id */
-  id: Scalars['Int'];
+  id: Scalars["Int"];
   /** Meal name */
-  name: Scalars['String'];
+  name: Scalars["String"];
   /** Meal price */
-  price: Scalars['Float'];
+  price: Scalars["Float"];
   type?: Maybe<MealTypeEnumType>;
 };
 
 /** Describes whether is Meal or Drink */
 export enum MealTypeEnumType {
-  Drink = 'DRINK',
-  Meal = 'MEAL'
+  Drink = "DRINK",
+  Meal = "MEAL",
 }
 
-
-
 export type MealsQueryOrderByIdArgs = {
-  orderId: Scalars['Int'];
-  token: Scalars['String'];
+  orderId: Scalars["Int"];
+  token: Scalars["String"];
 };
 
 /** Describes state of order */
 export enum OrderStateEnumType {
-  Closed = 'CLOSED',
-  Open = 'OPEN'
+  Closed = "CLOSED",
+  Open = "OPEN",
 }
 
 export type OrderType = {
-  __typename?: 'OrderType';
+  __typename?: "OrderType";
   /** Price */
-  finalPrice: Scalars['Float'];
+  finalPrice: Scalars["Float"];
   /** Order id */
-  id: Scalars['Int'];
+  id: Scalars["Int"];
   orderState?: Maybe<OrderStateEnumType>;
   suborders?: Maybe<Array<Maybe<SuborderType>>>;
   /** Table id */
-  tableId: Scalars['Int'];
+  tableId: Scalars["Int"];
   /** Token */
-  token: Scalars['String'];
+  token: Scalars["String"];
+};
+
+export type SuborderDrinkType = {
+  __typename?: "SuborderDrinkType";
+  /** Amount of drink measured in stored unit */
+  amount: Scalars["Float"];
+  /** Count of drinks in suborder. */
+  count: Scalars["Int"];
+  /** Drink Id */
+  id: Scalars["Int"];
+  /** Drink name. */
+  name: Scalars["String"];
+  /** Drink Price */
+  price: Scalars["Float"];
+  type?: Maybe<MealTypeEnumType>;
+  /** Unit in which is Amount stated */
+  unit: Scalars["String"];
 };
 
 export type SuborderInputType = {
   drinks?: Maybe<Array<Maybe<MealInputType>>>;
   meals?: Maybe<Array<Maybe<MealInputType>>>;
-  tableId: Scalars['Int'];
+  tableId: Scalars["Int"];
+};
+
+export type SuborderMealType = {
+  __typename?: "SuborderMealType";
+  /** Count of meal in suborder */
+  count: Scalars["Int"];
+  /** Meal id */
+  id: Scalars["Int"];
+  /** Meal name */
+  name: Scalars["String"];
+  /** Meal price */
+  price: Scalars["Float"];
+  type?: Maybe<MealTypeEnumType>;
 };
 
 export type SuborderType = {
-  __typename?: 'SuborderType';
-  drinks?: Maybe<Array<Maybe<DrinkType>>>;
+  __typename?: "SuborderType";
+  drinks?: Maybe<Array<Maybe<SuborderDrinkType>>>;
   /** Suborder id */
-  id: Scalars['Int'];
-  meals?: Maybe<Array<Maybe<MealType>>>;
+  id: Scalars["Int"];
+  meals?: Maybe<Array<Maybe<SuborderMealType>>>;
   /** Order id */
-  orderId: Scalars['Int'];
+  orderId: Scalars["Int"];
   /** Table id */
-  tableId: Scalars['Int'];
+  tableId: Scalars["Int"];
 };
 
-export type MealsQueryVariables = Exact<{ [key: string]: never; }>;
+export type MealsQueryVariables = Exact<{ [key: string]: never }>;
 
+export type MealsQuery = {
+  __typename?: "MealsQuery";
+  meals?:
+    | Array<
+        | { __typename?: "MealType"; id: number; name: string; price: number }
+        | null
+        | undefined
+      >
+    | null
+    | undefined;
+};
 
-export type MealsQuery = { __typename?: 'MealsQuery', meals?: Array<{ __typename?: 'MealType', id: number, name: string, price: number } | null | undefined> | null | undefined };
+export type DrinksQueryVariables = Exact<{ [key: string]: never }>;
 
-export type DrinksQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type DrinksQuery = { __typename?: 'MealsQuery', drinks?: Array<{ __typename?: 'DrinkType', id: number, name: string, price: number } | null | undefined> | null | undefined };
+export type DrinksQuery = {
+  __typename?: "MealsQuery";
+  drinks?:
+    | Array<
+        | {
+            __typename?: "DrinkType";
+            id: number;
+            name: string;
+            price: number;
+            amount: number;
+          }
+        | null
+        | undefined
+      >
+    | null
+    | undefined;
+};
 
 export type CreateSuborderMutationVariables = Exact<{
-  tableId: Scalars['Int'];
+  tableId: Scalars["Int"];
   meals?: Maybe<Array<Maybe<MealInputType>> | Maybe<MealInputType>>;
   drinks?: Maybe<Array<Maybe<MealInputType>> | Maybe<MealInputType>>;
-  token: Scalars['String'];
+  token: Scalars["String"];
 }>;
 
-
-export type CreateSuborderMutation = { __typename?: 'CreateSuborder', createSuborder?: { __typename?: 'OrderType', id: number, token: string, tableId: number } | null | undefined };
-
+export type CreateSuborderMutation = {
+  __typename?: "CreateSuborder";
+  createSuborder?:
+    | { __typename?: "OrderType"; id: number; token: string; tableId: number }
+    | null
+    | undefined;
+};
 
 export const MealsDocument = gql`
-    query Meals {
-  meals {
-    id
-    name
-    price
+  query Meals {
+    meals {
+      id
+      name
+      price
+    }
   }
-}
-    `;
+`;
 
 /**
  * __useMealsQuery__
@@ -153,26 +214,40 @@ export const MealsDocument = gql`
  *   },
  * });
  */
-export function useMealsQuery(baseOptions?: Apollo.QueryHookOptions<MealsQuery, MealsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MealsQuery, MealsQueryVariables>(MealsDocument, options);
-      }
-export function useMealsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MealsQuery, MealsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MealsQuery, MealsQueryVariables>(MealsDocument, options);
-        }
+export function useMealsQuery(
+  baseOptions?: Apollo.QueryHookOptions<MealsQuery, MealsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<MealsQuery, MealsQueryVariables>(
+    MealsDocument,
+    options
+  );
+}
+export function useMealsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<MealsQuery, MealsQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<MealsQuery, MealsQueryVariables>(
+    MealsDocument,
+    options
+  );
+}
 export type MealsQueryHookResult = ReturnType<typeof useMealsQuery>;
 export type MealsLazyQueryHookResult = ReturnType<typeof useMealsLazyQuery>;
-export type MealsQueryResult = Apollo.QueryResult<MealsQuery, MealsQueryVariables>;
+export type MealsQueryResult = Apollo.QueryResult<
+  MealsQuery,
+  MealsQueryVariables
+>;
 export const DrinksDocument = gql`
-    query Drinks {
-  drinks {
-    id
-    name
-    price
+  query Drinks {
+    drinks {
+      id
+      name
+      price
+      amount
+    }
   }
-}
-    `;
+`;
 
 /**
  * __useDrinksQuery__
@@ -189,30 +264,51 @@ export const DrinksDocument = gql`
  *   },
  * });
  */
-export function useDrinksQuery(baseOptions?: Apollo.QueryHookOptions<DrinksQuery, DrinksQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<DrinksQuery, DrinksQueryVariables>(DrinksDocument, options);
-      }
-export function useDrinksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DrinksQuery, DrinksQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<DrinksQuery, DrinksQueryVariables>(DrinksDocument, options);
-        }
+export function useDrinksQuery(
+  baseOptions?: Apollo.QueryHookOptions<DrinksQuery, DrinksQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<DrinksQuery, DrinksQueryVariables>(
+    DrinksDocument,
+    options
+  );
+}
+export function useDrinksLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<DrinksQuery, DrinksQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<DrinksQuery, DrinksQueryVariables>(
+    DrinksDocument,
+    options
+  );
+}
 export type DrinksQueryHookResult = ReturnType<typeof useDrinksQuery>;
 export type DrinksLazyQueryHookResult = ReturnType<typeof useDrinksLazyQuery>;
-export type DrinksQueryResult = Apollo.QueryResult<DrinksQuery, DrinksQueryVariables>;
+export type DrinksQueryResult = Apollo.QueryResult<
+  DrinksQuery,
+  DrinksQueryVariables
+>;
 export const CreateSuborderDocument = gql`
-    mutation CreateSuborder($tableId: Int!, $meals: [MealInputType], $drinks: [MealInputType], $token: String!) {
-  createSuborder(
-    suborder: {tableId: $tableId, meals: $meals, drinks: $drinks}
-    token: $token
+  mutation CreateSuborder(
+    $tableId: Int!
+    $meals: [MealInputType]
+    $drinks: [MealInputType]
+    $token: String!
   ) {
-    id
-    token
-    tableId
+    createSuborder(
+      suborder: { tableId: $tableId, meals: $meals, drinks: $drinks }
+      token: $token
+    ) {
+      id
+      token
+      tableId
+    }
   }
-}
-    `;
-export type CreateSuborderMutationFn = Apollo.MutationFunction<CreateSuborderMutation, CreateSuborderMutationVariables>;
+`;
+export type CreateSuborderMutationFn = Apollo.MutationFunction<
+  CreateSuborderMutation,
+  CreateSuborderMutationVariables
+>;
 
 /**
  * __useCreateSuborderMutation__
@@ -234,10 +330,24 @@ export type CreateSuborderMutationFn = Apollo.MutationFunction<CreateSuborderMut
  *   },
  * });
  */
-export function useCreateSuborderMutation(baseOptions?: Apollo.MutationHookOptions<CreateSuborderMutation, CreateSuborderMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateSuborderMutation, CreateSuborderMutationVariables>(CreateSuborderDocument, options);
-      }
-export type CreateSuborderMutationHookResult = ReturnType<typeof useCreateSuborderMutation>;
-export type CreateSuborderMutationResult = Apollo.MutationResult<CreateSuborderMutation>;
-export type CreateSuborderMutationOptions = Apollo.BaseMutationOptions<CreateSuborderMutation, CreateSuborderMutationVariables>;
+export function useCreateSuborderMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateSuborderMutation,
+    CreateSuborderMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateSuborderMutation,
+    CreateSuborderMutationVariables
+  >(CreateSuborderDocument, options);
+}
+export type CreateSuborderMutationHookResult = ReturnType<
+  typeof useCreateSuborderMutation
+>;
+export type CreateSuborderMutationResult =
+  Apollo.MutationResult<CreateSuborderMutation>;
+export type CreateSuborderMutationOptions = Apollo.BaseMutationOptions<
+  CreateSuborderMutation,
+  CreateSuborderMutationVariables
+>;
