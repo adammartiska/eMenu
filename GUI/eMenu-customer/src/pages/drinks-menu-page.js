@@ -5,7 +5,7 @@ import { addToCart, cacheDrinks } from "./drinksSlice";
 import { useDrinksQuery } from "../generated/graphql";
 import DrinkCard from "../components/DrinkCard";
 import "./drinks-menu-page.scss";
-import { SwipeableBottomDrawer } from "../components/SwipeableDrawer";
+import { SwipeableBottomDrawer } from "../components/SwipeableBottomDrawer";
 
 // STATE SHOULD BE OBJECT WITH KEYS AND THEIR QUANTITY
 // FOR EXAMPLE : { cocaCola: 2 } idk, if we should keep also 0-quantity drinks in the state
@@ -18,7 +18,9 @@ const initialState = {
 
 const DrinksMenuPage = () => {
   //const drinks = useSelector((state) => state.cart.drinks);
-  const { data: drinks, error, loading } = useDrinksQuery();
+  const { data, error, loading } = useDrinksQuery();
+  const [currentlyOpenedDrinkId, setCurrentlyOpenedDrinkId] =
+    React.useState(null);
   const [showDrawer, setShowDrawer] = React.useState(false);
   const dispatch = useDispatch();
   const [drinksOrder, setDrinksOrder] = React.useState(initialState);
@@ -33,8 +35,8 @@ const DrinksMenuPage = () => {
 
   React.useEffect(() => {
     // cache meals once its data is loaded
-    dispatch(cacheDrinks(drinks));
-  }, [drinks, dispatch]);
+    dispatch(cacheDrinks(data?.drinks));
+  }, [data, dispatch]);
 
   const handleRemoveButtonClick = React.useCallback(
     (id) => {
@@ -58,10 +60,14 @@ const DrinksMenuPage = () => {
 
   return (
     <div className="drinks-menu-page-wrapper">
-      {drinks?.drinks.map(({ id, name, price }) => (
+      {data?.drinks.map(({ id, name, price }) => (
         <DrinkCard
           key={id}
           id={id}
+          onClick={(id) => {
+            setCurrentlyOpenedDrinkId(id);
+            setShowDrawer(true);
+          }}
           onAddButtonClick={handleAddButtonClick}
           onRemoveButtonClick={handleRemoveButtonClick}
           onAddToBagClick={handleAddToBag}
@@ -71,9 +77,11 @@ const DrinksMenuPage = () => {
         />
       ))}
       <SwipeableBottomDrawer
+        isMeal={false}
         showDrawer={showDrawer}
         setShowDrawer={setShowDrawer}
         handleAddToBag={handleAddToBag}
+        currentlyOpenedItemId={currentlyOpenedDrinkId}
       />
     </div>
   );

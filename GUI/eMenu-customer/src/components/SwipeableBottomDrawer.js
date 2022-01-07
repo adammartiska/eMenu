@@ -8,7 +8,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import burgerUrl from "../static/burger.jpeg";
-import Counter from "../components/Counter";
+import Counter from "./Counter";
 import { getMealById, getDrinkById } from "../utils/utils";
 import { useSelector } from "react-redux";
 
@@ -17,8 +17,16 @@ export const SwipeableBottomDrawer = ({
   setShowDrawer,
   isMeal,
   handleAddToBag,
+  currentlyOpenedItemId,
   image,
 }) => {
+  console.log(currentlyOpenedItemId);
+  const currentTypeItems = useSelector((state) =>
+    isMeal ? state?.meals?.meals : state?.drinks?.drinks
+  );
+
+  const [currentlySelectedItem, setCurrentlySelectedItem] =
+    React.useState(null);
   const currentTypeOrder = useSelector((state) =>
     isMeal ? state?.meals?.mealOrder : state?.drinks?.drinksOrder
   );
@@ -26,8 +34,6 @@ export const SwipeableBottomDrawer = ({
   const [isAdditionalOrderInfo, setIsAdditionalOrderInfo] =
     React.useState(false);
   const [additionalorderInfo, setAdditionalOrderInfo] = React.useState(null);
-  const [currentlyOpenedMealId, setCurrentlyOpenedMealId] =
-    React.useState(null);
   const [currentItemCount, setCurrentItemCount] = React.useState(1);
   //const dispatch = useDispatch();
   const toggleDrawer =
@@ -40,9 +46,18 @@ export const SwipeableBottomDrawer = ({
         setIsAdditionalOrderInfo(false);
         setCurrentItemCount(maybeItem?.count ?? 1);
       }
-      setCurrentlyOpenedMealId(id);
       setShowDrawer(open);
     };
+
+  React.useEffect(() => {
+    const selectedItem = isMeal
+      ? getMealById(currentlyOpenedItemId, currentTypeItems)
+      : getDrinkById(currentlyOpenedItemId, currentTypeItems);
+    console.log(selectedItem);
+    setCurrentlySelectedItem(selectedItem);
+  }, [currentlyOpenedItemId, setCurrentItemCount, currentTypeItems, isMeal]);
+
+  //console.log(currentlySelectedItem);
   return (
     <React.Fragment>
       <SwipeableDrawer
@@ -103,7 +118,7 @@ export const SwipeableBottomDrawer = ({
               //because my default spacing is 8px can be adjusted in theme - responsiveness
               sx={{ fontSize: 20 }}
             >
-              Burger so slaninkou a chedarrom
+              {currentlySelectedItem?.name}
             </Typography>
             <Typography
               variant="subtitle2"
@@ -156,7 +171,7 @@ export const SwipeableBottomDrawer = ({
               }}
             >
               <Counter
-                id={currentlyOpenedMealId}
+                id={currentlyOpenedItemId}
                 count={currentItemCount}
                 onAddButtonClick={() =>
                   setCurrentItemCount(currentItemCount + 1)
