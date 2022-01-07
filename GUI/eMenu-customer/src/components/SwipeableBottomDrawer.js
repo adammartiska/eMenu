@@ -110,7 +110,11 @@ export const SwipeableBottomDrawer = ({
               />
             </Paper>
           )}
-          <div style={{ margin: 10 }}>
+          <div
+            style={
+              image ? { margin: 10 } : { marginInline: 16, marginBlock: 30 }
+            }
+          >
             <Typography
               component="div"
               variant="h4"
