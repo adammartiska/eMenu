@@ -7,3 +7,11 @@ export function getMealById(id, meals) {
   }
   return find(propEq("id", id))(meals);
 }
+
+//TODO I could do simple generic getter for all items but decided rather to keep it separated
+export function getDrinkById(id, drinks) {
+  if (!drinks) {
+    return;
+  }
+  return find(propEq("id", id))(drinks);
+}

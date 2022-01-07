@@ -5,6 +5,7 @@ import { addToCart, cacheDrinks } from "./drinksSlice";
 import { useDrinksQuery } from "../generated/graphql";
 import DrinkCard from "../components/DrinkCard";
 import "./drinks-menu-page.scss";
+import { SwipeableBottomDrawer } from "../components/SwipeableDrawer";
 
 // STATE SHOULD BE OBJECT WITH KEYS AND THEIR QUANTITY
 // FOR EXAMPLE : { cocaCola: 2 } idk, if we should keep also 0-quantity drinks in the state
@@ -18,7 +19,7 @@ const initialState = {
 const DrinksMenuPage = () => {
   //const drinks = useSelector((state) => state.cart.drinks);
   const { data: drinks, error, loading } = useDrinksQuery();
-
+  const [showDrawer, setShowDrawer] = React.useState(false);
   const dispatch = useDispatch();
   const [drinksOrder, setDrinksOrder] = React.useState(initialState);
   const handleAddButtonClick = React.useCallback(
@@ -69,6 +70,11 @@ const DrinksMenuPage = () => {
           price={price}
         />
       ))}
+      <SwipeableBottomDrawer
+        showDrawer={showDrawer}
+        setShowDrawer={setShowDrawer}
+        handleAddToBag={handleAddToBag}
+      />
     </div>
   );
 };
