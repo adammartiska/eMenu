@@ -3,6 +3,7 @@ import MenuItem3 from "../components/MenuItem3";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, cacheDrinks } from "./drinksSlice";
 import { useDrinksQuery } from "../generated/graphql";
+import DrinkCard from "../components/DrinkCard";
 import "./drinks-menu-page.scss";
 
 // STATE SHOULD BE OBJECT WITH KEYS AND THEIR QUANTITY
@@ -57,13 +58,13 @@ const DrinksMenuPage = () => {
   return (
     <div className="drinks-menu-page-wrapper">
       {drinks?.drinks.map(({ id, name, price }) => (
-        <MenuItem3
+        <DrinkCard
           key={id}
           id={id}
           onAddButtonClick={handleAddButtonClick}
           onRemoveButtonClick={handleRemoveButtonClick}
           onAddToBagClick={handleAddToBag}
-          name={name}
+          title={name}
           count={drinksOrder.cocaCola}
           price={price}
         />
