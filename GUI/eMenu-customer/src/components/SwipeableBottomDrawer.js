@@ -30,6 +30,10 @@ export const SwipeableBottomDrawer = ({
   const currentTypeOrder = useSelector((state) =>
     isMeal ? state?.meals?.mealOrder : state?.drinks?.drinksOrder
   );
+  const currentItemInOrder = useSelector((state) =>
+    state?.drinks?.drinkOrder?.find(({ id }) => id === currentlyOpenedItemId)
+  );
+  console.log(currentItemInOrder);
   const [mealOrder, setMealOrder] = React.useState({});
   const [isAdditionalOrderInfo, setIsAdditionalOrderInfo] =
     React.useState(false);
@@ -41,8 +45,8 @@ export const SwipeableBottomDrawer = ({
     (event) => {
       if (open) {
         const maybeItem = isMeal
-          ? getMealById(id, currentTypeOrder)
-          : getDrinkById(id, currentTypeOrder);
+          ? getMealById(currentlyOpenedItemId, currentTypeOrder)
+          : getDrinkById(currentlyOpenedItemId, currentTypeOrder);
         setIsAdditionalOrderInfo(false);
         setCurrentItemCount(maybeItem?.count ?? 1);
       }
@@ -55,7 +59,14 @@ export const SwipeableBottomDrawer = ({
       : getDrinkById(currentlyOpenedItemId, currentTypeItems);
     console.log(selectedItem);
     setCurrentlySelectedItem(selectedItem);
-  }, [currentlyOpenedItemId, setCurrentItemCount, currentTypeItems, isMeal]);
+    setCurrentItemCount(currentItemInOrder?.count ?? 1);
+  }, [
+    currentlyOpenedItemId,
+    setCurrentItemCount,
+    currentTypeItems,
+    currentItemInOrder,
+    isMeal,
+  ]);
 
   //console.log(currentlySelectedItem);
   return (
@@ -112,7 +123,9 @@ export const SwipeableBottomDrawer = ({
           )}
           <div
             style={
-              image ? { margin: 10 } : { marginInline: 16, marginBlock: 30 }
+              image
+                ? { margin: 10 }
+                : { marginInline: 16, marginTop: 30, marginBottom: 16 }
             }
           >
             <Typography
@@ -189,7 +202,13 @@ export const SwipeableBottomDrawer = ({
                 }}
               />
               <Button
-                onClick={handleAddToBag}
+                onClick={() =>
+                  handleAddToBag({
+                    id: currentlyOpenedItemId,
+                    count: currentItemCount,
+                    additionalOrderInfo: additionalorderInfo ?? undefined,
+                  })
+                }
                 color="onyx"
                 variant="contained"
                 //endIcon={<AddShoppingCartIcon />}

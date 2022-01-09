@@ -53,9 +53,11 @@ const DrinksMenuPage = () => {
 
   //TODO ADD some kind of user notification that items were added into cart
   const handleAddToBag = React.useCallback(
-    (id, name, price) =>
-      dispatch(addToCart({ id, name, count: drinksOrder[id], price })),
-    [drinksOrder, dispatch]
+    ({ id, count, additionalOrderInfo }) => {
+      console.log(additionalOrderInfo ?? "nothing");
+      dispatch(addToCart({ id, count }));
+    },
+    [dispatch]
   );
 
   return (
