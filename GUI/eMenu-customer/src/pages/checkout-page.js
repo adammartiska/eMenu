@@ -10,7 +10,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { incrementCount, decrementCount } from "./drinksSlice";
-import { getMealById } from "../utils/utils";
+import { getMealById, getDrinkById } from "../utils/utils";
 import { useCreateSuborderMutation } from "../generated/graphql";
 import { saveToken } from "./userSlice";
 import "./drinks-menu-page.scss";
@@ -22,8 +22,8 @@ const formatPrice = (price, count) => {
 const CheckoutPage = () => {
   //const [tableId, setTableId] = React.useState(Math.rand());
   const userToken = useSelector((state) => state?.user?.token);
-  const drinksOrder = useSelector((state) => state?.drinks?.drinkOrder);
-  const mealsOrder = useSelector((state) => state?.meals?.mealOrder);
+  const drinksOrder = useSelector((state) => state?.order?.drinks);
+  const mealsOrder = useSelector((state) => state?.order?.meals);
   const [createSuborderMutation, { data, loading, error }] =
     useCreateSuborderMutation({
       variables: {
@@ -36,6 +36,7 @@ const CheckoutPage = () => {
     });
   //TODO WTF???
   const meals = useSelector((state) => state?.meals?.meals?.meals);
+  const drinks = useSelector((state) => state?.drinks?.drinks);
   const dispatch = useDispatch();
 
   const handleAddButtonClick = React.useCallback(
@@ -80,6 +81,27 @@ const CheckoutPage = () => {
           <TableBody>
             {mealsOrder.map(({ id, count }) => {
               const { name, price } = getMealById(id, meals);
+              return (
+                <TableRow key={name}>
+                  <TableCell component="th" scope="row">
+                    {name}
+                  </TableCell>
+                  <TableCell align="center">
+                    <Counter
+                      id={id}
+                      count={count}
+                      onAddButtonClick={() => handleAddButtonClick(id)}
+                      onRemoveButtonClick={handleRemoveButtonClick}
+                    />
+                  </TableCell>
+                  <TableCell align="right">
+                    {formatPrice(price, count)}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+            {drinksOrder.map(({ id, count }) => {
+              const { name, price } = getDrinkById(id, drinks);
               return (
                 <TableRow key={name}>
                   <TableCell component="th" scope="row">

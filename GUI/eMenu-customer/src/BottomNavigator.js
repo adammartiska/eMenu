@@ -8,8 +8,8 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 
 const BottomNavigator = ({ onRouteChange, currentRoute }) => {
-  const drinks = useSelector((state) => state.drinks.drinkOrder);
-  const meals = useSelector((state) => state.meals.mealOrder);
+  const drinks = useSelector((state) => state?.order?.drinks);
+  const meals = useSelector((state) => state?.order?.meals);
   return (
     <BottomNavigation
       sx={{
