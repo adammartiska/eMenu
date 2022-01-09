@@ -2,6 +2,7 @@ import React from "react";
 import MenuItem3 from "../components/MenuItem3";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, cacheDrinks } from "./drinksSlice";
+import { addDrinkToCart } from "./orderSlice";
 import { useDrinksQuery } from "../generated/graphql";
 import DrinkCard from "../components/DrinkCard";
 import "./drinks-menu-page.scss";
@@ -54,8 +55,14 @@ const DrinksMenuPage = () => {
   //TODO ADD some kind of user notification that items were added into cart
   const handleAddToBag = React.useCallback(
     ({ id, count, additionalOrderInfo }) => {
-      console.log(additionalOrderInfo ?? "nothing");
-      dispatch(addToCart({ id, count }));
+      dispatch(
+        addDrinkToCart({
+          id,
+          count,
+          additionalOrderInfo: additionalOrderInfo ?? undefined,
+        })
+      );
+      setShowDrawer(false);
     },
     [dispatch]
   );
@@ -70,9 +77,6 @@ const DrinksMenuPage = () => {
             setCurrentlyOpenedDrinkId(id);
             setShowDrawer(true);
           }}
-          onAddButtonClick={handleAddButtonClick}
-          onRemoveButtonClick={handleRemoveButtonClick}
-          onAddToBagClick={handleAddToBag}
           title={name}
           count={drinksOrder.cocaCola}
           price={price}
