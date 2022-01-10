@@ -17,10 +17,14 @@ export const userSlice = createSlice({
     addMealToCart: (state, { payload }) => {
       state.meals = [...state.meals, payload];
     },
+    emptyCart: (state) => {
+      state.meals = [];
+      state.drinks = [];
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addDrinkToCart, addMealToCart } = userSlice.actions;
+export const { addDrinkToCart, addMealToCart, emptyCart } = userSlice.actions;
 
 export default userSlice.reducer;

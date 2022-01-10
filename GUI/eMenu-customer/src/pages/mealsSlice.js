@@ -5,7 +5,6 @@ export const mealsSlice = createSlice({
   name: "meals",
   initialState: {
     meals: [],
-    mealOrder: [],
   },
   reducers: {
     cacheMeals: (state, { payload }) => {

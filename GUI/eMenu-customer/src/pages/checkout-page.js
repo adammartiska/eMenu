@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 import { incrementCount, decrementCount } from "./drinksSlice";
 import { getMealById, getDrinkById } from "../utils/utils";
 import { useCreateSuborderMutation } from "../generated/graphql";
+import { emptyCart } from "./orderSlice";
 import { saveToken } from "./userSlice";
 import "./drinks-menu-page.scss";
 
@@ -27,7 +28,7 @@ const CheckoutPage = () => {
   const [createSuborderMutation, { data, loading, error }] =
     useCreateSuborderMutation({
       variables: {
-        tableId: 123,
+        tableId: 129,
         meals: mealsOrder,
         drinks: drinksOrder,
         //below is random token with length of our token, received token will be different
@@ -53,6 +54,7 @@ const CheckoutPage = () => {
     const response = await createSuborderMutation();
     if (response?.data) {
       dispatch(saveToken(response?.data?.createSuborder?.token));
+      dispatch(emptyCart());
       console.log(response);
       console.log(data);
       console.log(error);
