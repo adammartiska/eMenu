@@ -14,7 +14,7 @@ export const PriceTaggedItem = ({ title, price, additionalOrderInfo }) => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-          marginInline: 20,
+          marginInline: 5,
         }}
       >
         <div>
@@ -44,10 +44,10 @@ export const PriceTaggedItem = ({ title, price, additionalOrderInfo }) => {
           variant="h5"
           sx={{ marginLeft: 1, alignSelf: "center" }}
         >
-          {price}
+          {price} €
         </Typography>
       </div>
-      <Divider variant="middle" />
+      <Divider variant="large" />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import { Button } from "@mui/material";
 import { useCreateSuborderMutation } from "../generated/graphql";
 import { PriceTaggedItem } from "../components/PriceTaggedItem";
 import "./drinks-menu-page.scss";
@@ -27,16 +28,28 @@ const OrderStatePage = () => {
   const dispatch = useDispatch();
 
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-evenly",
-          alignItems: "space-between",
-        }}
-      >
-        {/* <Typography
+    <div
+      style={{
+        marginInline: 10,
+        justifyContent: "space-between",
+        flexDirection: "column",
+        height: "80vh",
+        //height: 1000,
+        display: "flex",
+      }}
+    >
+      <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: 15,
+            marginInline: 20,
+            fontWeight: 600,
+          }}
+        >
+          {/* <Typography
         component="div"
         variant="h4"
         //TODO Why is sx prop adding extra margin and style prop not???
@@ -45,40 +58,76 @@ const OrderStatePage = () => {
       >
         Stav objednavky
       </Typography> */}
-        <Typography
-          component="div"
-          variant="h4"
-          //TODO Why is sx prop adding extra margin and style prop not???
-          //because my default spacing is 8px can be adjusted in theme - responsiveness
+          <Typography
+            component="div"
+            variant="h4"
+            sx={{
+              fontWeight: 600,
+            }}
+          >
+            Stav objednavky
+          </Typography>
+          <Typography
+            component="div"
+            variant="h4"
+            sx={{
+              color: "orange",
+              fontWeight: 600,
+            }}
+          >
+            Prijata
+          </Typography>
+        </div>
+        <Divider
           sx={{
-            fontSize: 20,
-            bgcolor: "orange",
-            padding: 2,
-            borderRadius: 2,
-            marginTop: 2,
+            marginTop: 1,
+            marginBottom: 3,
+            borderWidth: 1,
+            //   borderStyle: "dotted",
+            borderColor: "black",
+            bgColor: "black",
+          }}
+        />
+        {[
+          {
+            title: "Burger",
+            price: 12.8,
+            additionalOrderInfo: true,
+          },
+          {
+            title: "Pizza",
+            price: 6.8,
+            additionalOrderInfo: true,
+          },
+        ].map(({ title, price, additionalOrderInfo }) => (
+          <PriceTaggedItem
+            title={title}
+            price={price}
+            additionalOrderInfo={additionalOrderInfo}
+          />
+        ))}
+      </div>
+      {/* TODO think about absolute positioning of this button */}
+      <div style={{ justifyContent: "center", display: "flex" }}>
+        <Button
+          //onClick={submitOrder}
+          color="black"
+          variant="contained"
+          //endIcon={<AddShoppingCartIcon />}git
+          sx={{
+            justifyContent: "center",
+            alignItems: "center",
+            textTransform: "none",
+            height: 35,
+            width: 100,
+            bgcolor: "black",
+            color: "white",
+            marginTop: 6,
           }}
         >
-          Objednavka prijata
-        </Typography>
+          22.80 €
+        </Button>
       </div>
-      {[
-        {
-          title: "Burger",
-          price: 12.8,
-          additionalOrderInfo: true,
-        },
-        {
-          title: "Pizza",
-          price: 6.8,
-          additionalOrderInfo: true,
-        },
-      ].map(({ title, price, additionalOrderInfo }) => (
-        <PriceTaggedItem
-          title={title}
-          price={price}
-          additionalOrderInfo={additionalOrderInfo}
-        />
-      ))}
     </div>
   );
 };

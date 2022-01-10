@@ -69,6 +69,10 @@ const theme = createTheme({
       main: "#2D4654",
     },
     mantis: "#7DD181",
+    // black: {
+    //   main: "#000",
+    // },
+    black: "#000000",
     onyx: {
       main: "#D0CFCF",
       font: "#000",
