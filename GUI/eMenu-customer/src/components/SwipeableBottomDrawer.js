@@ -39,7 +39,6 @@ export const SwipeableBottomDrawer = ({
     React.useState(false);
   const [additionalorderInfo, setAdditionalOrderInfo] = React.useState(null);
   const [currentItemCount, setCurrentItemCount] = React.useState(1);
-  //const dispatch = useDispatch();
   const toggleDrawer =
     (open, id = null) =>
     (event) => {
@@ -68,7 +67,6 @@ export const SwipeableBottomDrawer = ({
     isMeal,
   ]);
 
-  //console.log(currentlySelectedItem);
   return (
     <React.Fragment>
       <SwipeableDrawer
@@ -178,7 +176,6 @@ export const SwipeableBottomDrawer = ({
                 onBlur={(e) => setAdditionalOrderInfo(e.target.value)}
               />
             )}
-            {/* <Divider variant="middle" sx={{ bgcolor: "onyxDarker.main" }} /> */}
             <div
               style={{
                 marginTop: 20,
