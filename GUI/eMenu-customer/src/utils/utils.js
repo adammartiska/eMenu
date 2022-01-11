@@ -13,6 +13,5 @@ export function getDrinkById(id, drinks) {
   if (!drinks) {
     return;
   }
-  console.log(drinks);
   return find(propEq("id", id))(drinks);
 }

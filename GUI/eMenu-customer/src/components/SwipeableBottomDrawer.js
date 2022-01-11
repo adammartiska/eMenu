@@ -20,7 +20,6 @@ export const SwipeableBottomDrawer = ({
   currentlyOpenedItemId,
   image,
 }) => {
-  console.log(currentlyOpenedItemId);
   const currentTypeItems = useSelector((state) =>
     isMeal ? state?.meals?.meals : state?.drinks?.drinks
   );
@@ -33,8 +32,6 @@ export const SwipeableBottomDrawer = ({
   const currentItemInOrder = useSelector((state) =>
     state?.drinks?.drinkOrder?.find(({ id }) => id === currentlyOpenedItemId)
   );
-  console.log(currentItemInOrder);
-  const [mealOrder, setMealOrder] = React.useState({});
   const [isAdditionalOrderInfo, setIsAdditionalOrderInfo] =
     React.useState(false);
   const [additionalorderInfo, setAdditionalOrderInfo] = React.useState(null);
@@ -56,7 +53,6 @@ export const SwipeableBottomDrawer = ({
     const selectedItem = isMeal
       ? getMealById(currentlyOpenedItemId, currentTypeItems)
       : getDrinkById(currentlyOpenedItemId, currentTypeItems);
-    console.log(selectedItem);
     setCurrentlySelectedItem(selectedItem);
     setCurrentItemCount(currentItemInOrder?.count ?? 1);
   }, [

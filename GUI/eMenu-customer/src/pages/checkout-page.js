@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 import { incrementCount, decrementCount } from "./drinksSlice";
 import { getMealById, getDrinkById } from "../utils/utils";
 import { useCreateSuborderMutation } from "../generated/graphql";
+import { CheckoutItem } from "../components/CheckoutItem";
 import { emptyCart } from "./orderSlice";
 import { saveToken } from "./userSlice";
 import "./drinks-menu-page.scss";
@@ -23,12 +24,12 @@ const formatPrice = (price, count) => {
 const CheckoutPage = () => {
   //const [tableId, setTableId] = React.useState(Math.rand());
   const userToken = useSelector((state) => state?.user?.token);
-  const drinksOrder = useSelector((state) => state?.order?.drinks);
-  const mealsOrder = useSelector((state) => state?.order?.meals);
+  const drinksOrder = useSelector((state) => state?.order?.inCart?.drinks);
+  const mealsOrder = useSelector((state) => state?.order?.inCart?.meals);
   const [createSuborderMutation, { data, loading, error }] =
     useCreateSuborderMutation({
       variables: {
-        tableId: 129,
+        tableId: 199,
         meals: mealsOrder,
         drinks: drinksOrder,
         //below is random token with length of our token, received token will be different
@@ -51,6 +52,8 @@ const CheckoutPage = () => {
   );
 
   const submitOrder = React.useCallback(async () => {
+    console.log(mealsOrder);
+    console.log(drinksOrder);
     const response = await createSuborderMutation();
     if (response?.data) {
       dispatch(saveToken(response?.data?.createSuborder?.token));
@@ -64,68 +67,33 @@ const CheckoutPage = () => {
 
   return (
     <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      style={
+        {
+          // display: "flex",
+          // flexDirection: "column",
+          // justifyContent: "center",
+          // alignItems: "center",
+        }
+      }
     >
-      <TableContainer component={Paper}>
-        <Table aria-label="caption table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Polozka</TableCell>
-              <TableCell align="center">Mnozstvo</TableCell>
-              <TableCell align="right">Cena</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {mealsOrder.map(({ id, count }) => {
-              const { name, price } = getMealById(id, meals);
-              return (
-                <TableRow key={name}>
-                  <TableCell component="th" scope="row">
-                    {name}
-                  </TableCell>
-                  <TableCell align="center">
-                    <Counter
-                      id={id}
-                      count={count}
-                      onAddButtonClick={() => handleAddButtonClick(id)}
-                      onRemoveButtonClick={handleRemoveButtonClick}
-                    />
-                  </TableCell>
-                  <TableCell align="right">
-                    {formatPrice(price, count)}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-            {drinksOrder.map(({ id, count }) => {
-              const { name, price } = getDrinkById(id, drinks);
-              return (
-                <TableRow key={name}>
-                  <TableCell component="th" scope="row">
-                    {name}
-                  </TableCell>
-                  <TableCell align="center">
-                    <Counter
-                      id={id}
-                      count={count}
-                      onAddButtonClick={() => handleAddButtonClick(id)}
-                      onRemoveButtonClick={handleRemoveButtonClick}
-                    />
-                  </TableCell>
-                  <TableCell align="right">
-                    {formatPrice(price, count)}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {mealsOrder.map(({ id, count }) => {
+        const { name, price } = getMealById(id, meals);
+        return (
+          <CheckoutItem
+            id={id}
+            title={name}
+            price={price}
+            count={count}
+            isMeal
+          />
+        );
+      })}
+      {drinksOrder.map(({ id, count }) => {
+        const { name, price } = getDrinkById(id, drinks);
+        return (
+          <CheckoutItem id={id} title={name} price={price} count={count} />
+        );
+      })}
       <Button
         onClick={submitOrder}
         color="onyx"
