@@ -13,7 +13,7 @@ import { incrementCount, decrementCount } from "./drinksSlice";
 import { getMealById, getDrinkById } from "../utils/utils";
 import { useCreateSuborderMutation } from "../generated/graphql";
 import { CheckoutItem } from "../components/CheckoutItem";
-import { emptyCart } from "./orderSlice";
+import { emptyCart, saveOrderId } from "./orderSlice";
 import { saveToken } from "./userSlice";
 import "./drinks-menu-page.scss";
 
@@ -29,7 +29,7 @@ const CheckoutPage = () => {
   const [createSuborderMutation, { data, loading, error }] =
     useCreateSuborderMutation({
       variables: {
-        tableId: 199,
+        tableId: 5,
         meals: mealsOrder,
         drinks: drinksOrder,
         //below is random token with length of our token, received token will be different
@@ -52,18 +52,13 @@ const CheckoutPage = () => {
   );
 
   const submitOrder = React.useCallback(async () => {
-    console.log(mealsOrder);
-    console.log(drinksOrder);
     const response = await createSuborderMutation();
     if (response?.data) {
       dispatch(saveToken(response?.data?.createSuborder?.token));
+      dispatch(saveOrderId(response?.data?.createSuborder?.id));
       dispatch(emptyCart());
-      console.log(response);
-      console.log(data);
-      console.log(error);
-      console.log(userToken);
     }
-  }, [createSuborderMutation, data, error, dispatch, userToken]);
+  }, [createSuborderMutation, dispatch]);
 
   return (
     <div

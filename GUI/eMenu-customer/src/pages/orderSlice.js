@@ -54,6 +54,9 @@ export const userSlice = createSlice({
       state.inCart.meals = [];
       state.inCart.drinks = [];
     },
+    saveOrderId: (state, { payload }) => {
+      state.id = payload;
+    },
   },
 });
 
@@ -62,6 +65,7 @@ export const {
   addDrinkToCart,
   addMealToCart,
   emptyCart,
+  saveOrderId,
   incrementCount,
   decrementCount,
 } = userSlice.actions;
