@@ -3,7 +3,10 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { Button } from "@mui/material";
-import { useCreateSuborderMutation } from "../generated/graphql";
+import {
+  useCreateSuborderMutation,
+  useOrderChangedSubscription,
+} from "../generated/graphql";
 import { PriceTaggedItem } from "../components/PriceTaggedItem";
 import "./drinks-menu-page.scss";
 
@@ -12,15 +15,24 @@ const formatPrice = (price, count) => {
 };
 
 const OrderStatePage = () => {
-  const [createSuborderMutation, { data, loading, error }] =
-    useCreateSuborderMutation({
-      variables: {
-        tableId: 17,
-        meals: [{ id: 1, count: 2 }],
-        drinks: [{ id: 1, count: 3 }],
-        token: "bpTtlPuC",
-      },
-    });
+  const orderId = useSelector((state) => state?.order?.id);
+  const token = useSelector((state) => state?.user?.token);
+  //   const [createSuborderMutation, { data, loading, error }] =
+  //     useCreateSuborderMutation({
+  //       variables: {
+  //         tableId: 17,
+  //         meals: [{ id: 1, count: 2 }],
+  //         drinks: [{ id: 1, count: 3 }],
+  //         token: "bpTtlPuC",
+  //       },
+  //     });
+
+  const { data, loading, error } = useOrderChangedSubscription({
+    variables: {
+      orderId,
+      token,
+    },
+  });
   const drinks = useSelector((state) => state?.drinks?.drinkOrder);
   const mealsOrder = useSelector((state) => state?.meals?.mealOrder);
   //TODO WTF???

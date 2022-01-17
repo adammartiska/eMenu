@@ -23,10 +23,16 @@ export type Scalars = {
 export type CreateSuborder = {
   __typename?: "CreateSuborder";
   createSuborder?: Maybe<OrderType>;
+  openOrder?: Maybe<OrderType>;
 };
 
 export type CreateSuborderCreateSuborderArgs = {
   suborder: SuborderInputType;
+  token: Scalars["String"];
+};
+
+export type CreateSuborderOpenOrderArgs = {
+  orderId: Scalars["Int"];
   token: Scalars["String"];
 };
 
@@ -72,10 +78,30 @@ export type MealsQueryOrderByIdArgs = {
   token: Scalars["String"];
 };
 
+export type OrderChangedMessageType = {
+  __typename?: "OrderChangedMessageType";
+  /** Message of specific order change */
+  message: Scalars["String"];
+  /** Id of changed order */
+  orderId: Scalars["Int"];
+  orderState?: Maybe<OrderStateEnumType>;
+};
+
+export type OrderChangedSubscription = {
+  __typename?: "OrderChangedSubscription";
+  orderChanged?: Maybe<OrderChangedMessageType>;
+};
+
+export type OrderChangedSubscriptionOrderChangedArgs = {
+  orderId: Scalars["Int"];
+  token: Scalars["String"];
+};
+
 /** Describes state of order */
 export enum OrderStateEnumType {
   Closed = "CLOSED",
   Open = "OPEN",
+  Waiting = "WAITING",
 }
 
 export type OrderType = {
@@ -188,6 +214,11 @@ export type CreateSuborderMutation = {
     | null
     | undefined;
 };
+
+export type OrderChangedSubscriptionVariables = Exact<{
+  orderId: Scalars["Int"];
+  token: Scalars["String"];
+}>;
 
 export const MealsDocument = gql`
   query Meals {
@@ -351,3 +382,47 @@ export type CreateSuborderMutationOptions = Apollo.BaseMutationOptions<
   CreateSuborderMutation,
   CreateSuborderMutationVariables
 >;
+export const OrderChangedDocument = gql`
+  subscription OrderChanged($orderId: Int!, $token: String!) {
+    orderChanged(orderId: $orderId, token: $token) {
+      orderId
+      orderState
+      message
+    }
+  }
+`;
+
+/**
+ * __useOrderChangedSubscription__
+ *
+ * To run a query within a React component, call `useOrderChangedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOrderChangedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderChangedSubscription({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useOrderChangedSubscription(
+  baseOptions: Apollo.SubscriptionHookOptions<
+    OrderChangedSubscription,
+    OrderChangedSubscriptionVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSubscription<
+    OrderChangedSubscription,
+    OrderChangedSubscriptionVariables
+  >(OrderChangedDocument, options);
+}
+export type OrderChangedSubscriptionHookResult = ReturnType<
+  typeof useOrderChangedSubscription
+>;
+export type OrderChangedSubscriptionResult =
+  Apollo.SubscriptionResult<OrderChangedSubscription>;

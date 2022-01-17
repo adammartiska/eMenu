@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userSlice = createSlice({
   name: "order",
   initialState: {
+    id: null,
     inCart: {
       meals: [],
       drinks: [],

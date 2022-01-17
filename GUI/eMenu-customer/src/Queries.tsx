@@ -60,3 +60,13 @@ export const SUBORDER = gql`
     }
   }
 `;
+
+const COMMENTS_SUBSCRIPTION = gql`
+  subscription OrderChanged($orderId: Int!, $token: String!) {
+    orderChanged(orderId: $orderId, token: $token) {
+      orderId
+      orderState
+      message
+    }
+  }
+`;
