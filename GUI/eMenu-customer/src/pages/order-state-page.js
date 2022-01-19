@@ -76,24 +76,42 @@ const OrderStatePage = () => {
             bgColor: "black",
           }}
         />
-        {meals?.map(({ id, name, price }) => (
-          <PriceTaggedItem
-            key={id}
-            id={id}
-            title={name}
-            price={price}
-            //additionalOrderInfo={additionalOrderInfo}
-          />
-        ))}
-        {drinks?.map(({ id, name, price }) => (
-          <PriceTaggedItem
-            key={id}
-            id={id}
-            title={name}
-            price={price}
-            //additionalOrderInfo={additionalOrderInfo}
-          />
-        ))}
+        {!meals || !drinks ? (
+          <Typography
+            component="div"
+            variant="h4"
+            sx={{
+              height: "40vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "grayInactive.main",
+            }}
+          >
+            Nemate zatial ziadne objednavky
+          </Typography>
+        ) : (
+          <>
+            {meals?.map(({ id, name, price }) => (
+              <PriceTaggedItem
+                key={id}
+                id={id}
+                title={name}
+                price={price}
+                //additionalOrderInfo={additionalOrderInfo}
+              />
+            ))}
+            {drinks?.map(({ id, name, price }) => (
+              <PriceTaggedItem
+                key={id}
+                id={id}
+                title={name}
+                price={price}
+                //additionalOrderInfo={additionalOrderInfo}
+              />
+            ))}
+          </>
+        )}
       </div>
       {/* TODO think about absolute positioning of this button */}
       <div style={{ justifyContent: "center", display: "flex" }}>

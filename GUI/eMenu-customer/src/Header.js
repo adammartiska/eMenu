@@ -39,7 +39,7 @@ const renderBadgeAccordingOrderState = (state) => {
     return (
       <VisibilityIcon
         sx={{
-          color: "secondary.main",
+          color: "onyx.fontInactive",
           fontSize: 20,
           position: "absolute",
           bottom: 15,

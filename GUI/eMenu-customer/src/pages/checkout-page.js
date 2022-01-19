@@ -84,12 +84,14 @@ const CheckoutPage = () => {
       })}
       <Button
         onClick={submitOrder}
-        color="onyx"
         variant="contained"
+        color="complementary"
         //endIcon={<AddShoppingCartIcon />}git
         sx={{
-          justifyContent: "center",
-          alignItems: "center",
+          width: 100,
+          position: "absolute",
+          bottom: 65,
+          left: "calc(50% - 50px)",
           textTransform: "none",
           height: 35,
           bgcolor: "onyx",

@@ -46,11 +46,36 @@ export const theme = createTheme({
     // black: {
     //   main: "#000",
     // },
+    complementary: {
+      main: "#4891FE",
+    },
+    fontActive: {
+      main: "#0B6CFE",
+      contrastText: "#fff",
+    },
+    fontInactive: {
+      main: "#EAEFD3",
+    },
+    grayInactive: {
+      main: "#CCC",
+    },
     black: "#000000",
     onyx: {
-      main: "#D0CFCF",
-      font: "#000",
+      main: "#FE9D0B",
+      fontActive: "#000",
+      fontInactive: "#EAEFD3",
+      complementary: "#0B6CFE",
+      font: "#EAEFD3",
+      // orange crayola - F97639
+      // skor uz yellow orange - FEB548 -- dost dobre
+      // najs oranzova - FE9D0B
+      // dalsia melon -DBC0A9
+      // peach puff - F5D6BA
+      // dost v pohode - D6D5C9
+      // asi pouzit tuto - 00A5E0
       // zaujimava modra main: "#6699CC",
+      // 449DD1
+      //eggshel; -F2E8CF
       //main: "#DFE0DC",
       //main: "#F4F4F8",
       //main: "#C9CAD9",
