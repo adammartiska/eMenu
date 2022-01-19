@@ -2,7 +2,7 @@ import React from "react";
 import { Typography } from "@mui/material";
 import { Divider } from "@mui/material";
 
-export const PriceTaggedItem = ({ title, price, additionalOrderInfo }) => {
+export const PriceTaggedItem = ({ title, price, additionalOrderInfo, id }) => {
   return (
     <div
       style={{

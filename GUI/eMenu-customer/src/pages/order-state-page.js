@@ -1,14 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import * as React from "react";
+import { head, append } from "ramda";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { Button } from "@mui/material";
 import {
   useCreateSuborderMutation,
-  useOrderChangedSubscription,
+  useOrderChangedSubscriptionSubscription,
 } from "../generated/graphql";
 import { PriceTaggedItem } from "../components/PriceTaggedItem";
 import "./drinks-menu-page.scss";
+import { ErrorOutlineRounded } from "@mui/icons-material";
 
 const formatPrice = (price, count) => {
   return `${(price * count).toFixed(2)} €`;
@@ -17,6 +19,7 @@ const formatPrice = (price, count) => {
 const OrderStatePage = () => {
   const orderId = useSelector((state) => state?.order?.id);
   const token = useSelector((state) => state?.user?.token);
+  const [currentFinalPrice, setCurrentFinalPrice] = React.useState(0);
   //   const [createSuborderMutation, { data, loading, error }] =
   //     useCreateSuborderMutation({
   //       variables: {
@@ -27,17 +30,43 @@ const OrderStatePage = () => {
   //       },
   //     });
 
-  const { data, loading, error } = useOrderChangedSubscription({
+  const { data, loading, error } = useOrderChangedSubscriptionSubscription({
     variables: {
       orderId,
       token,
     },
   });
-  const drinks = useSelector((state) => state?.drinks?.drinkOrder);
-  const mealsOrder = useSelector((state) => state?.meals?.mealOrder);
+
+  const [orderedDrinks, setOrderedDrinks] = React.useState(null);
+  const [orderedMeals, setOrderedMeals] = React.useState(null);
   //TODO WTF???
   const meals = useSelector((state) => state?.meals?.meals?.meals);
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (data?.orderChanged) {
+      const newSuborder = head(data?.orderChanged.suborders);
+      console.log(newSuborder);
+      setOrderedMeals((orderedMeals) => {
+        if (orderedMeals) {
+          return [...newSuborder?.meals, ...orderedMeals];
+        } else {
+          return newSuborder?.meals;
+        }
+      });
+      setOrderedDrinks((orderedDrinks) => {
+        if (orderedDrinks) {
+          return [...newSuborder?.drinks, ...orderedDrinks];
+        } else {
+          return newSuborder?.drinks;
+        }
+      });
+      setCurrentFinalPrice(data?.orderChanged?.finalPrice);
+    }
+  }, [data, error]);
+
+  console.log(orderedDrinks);
+  console.log(orderedMeals);
 
   return (
     <div
@@ -100,22 +129,22 @@ const OrderStatePage = () => {
             bgColor: "black",
           }}
         />
-        {[
-          {
-            title: "Burger",
-            price: 12.8,
-            additionalOrderInfo: true,
-          },
-          {
-            title: "Pizza",
-            price: 6.8,
-            additionalOrderInfo: true,
-          },
-        ].map(({ title, price, additionalOrderInfo }) => (
+        {orderedMeals?.map(({ id, name, price }) => (
           <PriceTaggedItem
-            title={title}
+            key={id}
+            id={id}
+            title={name}
             price={price}
-            additionalOrderInfo={additionalOrderInfo}
+            //additionalOrderInfo={additionalOrderInfo}
+          />
+        ))}
+        {orderedDrinks?.map(({ id, name, price }) => (
+          <PriceTaggedItem
+            key={id}
+            id={id}
+            title={name}
+            price={price}
+            //additionalOrderInfo={additionalOrderInfo}
           />
         ))}
       </div>
@@ -137,7 +166,7 @@ const OrderStatePage = () => {
             marginTop: 6,
           }}
         >
-          22.80 €
+          {`${currentFinalPrice ?? 0} €`}
         </Button>
       </div>
     </div>

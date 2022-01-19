@@ -61,12 +61,25 @@ export const SUBORDER = gql`
   }
 `;
 
-const COMMENTS_SUBSCRIPTION = gql`
-  subscription OrderChanged($orderId: Int!, $token: String!) {
+const ORDER_CHANGED_SUBSCRIPTION = gql`
+  subscription OrderChangedSubscription($orderId: Int!, $token: String!) {
     orderChanged(orderId: $orderId, token: $token) {
-      orderId
+      id
+      token
       orderState
-      message
+      suborders {
+        meals {
+          id
+          name
+          price
+        }
+        drinks {
+          id
+          name
+          price
+        }
+      }
+      finalPrice
     }
   }
 `;

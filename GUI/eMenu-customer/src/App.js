@@ -38,6 +38,7 @@ const wsLink = new WebSocketLink({
 // * The Link to use for an operation if the function returns a "falsy" value
 const splitLink = split(
   ({ query }) => {
+    console.log(query);
     const definition = getMainDefinition(query);
     return (
       definition.kind === "OperationDefinition" &&

@@ -26,16 +26,16 @@ const CheckoutPage = () => {
   const userToken = useSelector((state) => state?.user?.token);
   const drinksOrder = useSelector((state) => state?.order?.inCart?.drinks);
   const mealsOrder = useSelector((state) => state?.order?.inCart?.meals);
-  const [createSuborderMutation, { data, loading, error }] =
-    useCreateSuborderMutation({
-      variables: {
-        tableId: 5,
-        meals: mealsOrder,
-        drinks: drinksOrder,
-        //below is random token with length of our token, received token will be different
-        token: userToken ?? "vDso4eBx",
-      },
-    });
+  const [createSuborderMutation] = useCreateSuborderMutation({
+    variables: {
+      tableId: 42,
+      meals: mealsOrder,
+      drinks: drinksOrder,
+      //below is random token with length of our token, received token will be different
+      token: userToken ?? "vDso4eBx",
+    },
+  });
+
   //TODO WTF???
   const meals = useSelector((state) => state?.meals?.meals?.meals);
   const drinks = useSelector((state) => state?.drinks?.drinks);
