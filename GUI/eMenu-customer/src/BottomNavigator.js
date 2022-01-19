@@ -8,11 +8,12 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 
 const BottomNavigator = ({ onRouteChange, currentRoute }) => {
-  const drinks = useSelector((state) => state.cart.drinks);
+  const drinks = useSelector((state) => state?.order?.inCart?.drinks);
+  const meals = useSelector((state) => state?.order?.inCart?.meals);
   return (
     <BottomNavigation
       sx={{
-        bgcolor: "#F1F1F1",
+        bgcolor: "onyx.main",
         width: "100%",
         position: "fixed",
         bottom: 0,
@@ -23,9 +24,9 @@ const BottomNavigator = ({ onRouteChange, currentRoute }) => {
     >
       <BottomNavigationAction
         sx={{
-          color: "onyx.font",
+          color: "onyx.fontInactive",
           "&.Mui-selected": {
-            color: "secondary.main",
+            color: "onyx.fontActive",
           },
         }}
         icon={<LocalBarIcon />}
@@ -35,9 +36,9 @@ const BottomNavigator = ({ onRouteChange, currentRoute }) => {
       />
       <BottomNavigationAction
         sx={{
-          color: "onyx.font",
+          color: "onyx.fontInactive",
           "&.Mui-selected": {
-            color: "secondary.main",
+            color: "onyx.fontActive",
           },
         }}
         label="Jedla"
@@ -47,9 +48,9 @@ const BottomNavigator = ({ onRouteChange, currentRoute }) => {
       />
       <BottomNavigationAction
         sx={{
-          color: "onyx.font",
+          color: "onyx.fontInactive",
           "&.Mui-selected": {
-            color: "secondary.main",
+            color: "onyx.fontActive",
           },
         }}
         label="Kosik"
@@ -57,11 +58,13 @@ const BottomNavigator = ({ onRouteChange, currentRoute }) => {
         to="/cart"
         icon={
           <Badge
-            badgeContent={Object.keys(drinks).length}
+            badgeContent={
+              Object.keys(drinks).length + Object.keys(meals).length
+            }
             color={
               // this is kinda bad, TODO replace it with url content, but for now this is how MUI works
               // returning index of route
-              currentRoute === 2 ? "onyx" : "secondary"
+              currentRoute === 2 ? "complementary" : "complementary"
             }
           >
             <ShoppingBasketIcon />

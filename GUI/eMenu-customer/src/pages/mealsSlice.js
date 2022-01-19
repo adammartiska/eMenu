@@ -1,20 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { propEq } from "ramda";
 
-export const drinksSlice = createSlice({
-  name: "drinks",
+export const mealsSlice = createSlice({
+  name: "meals",
   initialState: {
-    drinks: [],
+    meals: [],
   },
   reducers: {
-    cacheDrinks: (state, { payload }) => {
-      state.drinks = payload;
+    cacheMeals: (state, { payload }) => {
+      state.meals = payload;
     },
     addToCart: (state, { payload }) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state.drinkOrder = [...state.drinkOrder, payload];
+      const index = state.mealOrder.findIndex((meal) => meal.id === payload.id);
+      if (index !== -1) {
+        state.mealOrder[index] = payload;
+      } else {
+        state.mealOrder = [...state.mealOrder, payload];
+      }
     },
     incrementCount: (state, { payload }) => {
       state.drinks[
@@ -42,7 +48,7 @@ export const {
   decrement,
   incrementCount,
   decrementCount,
-  cacheDrinks,
-} = drinksSlice.actions;
+  cacheMeals,
+} = mealsSlice.actions;
 
-export default drinksSlice.reducer;
+export default mealsSlice.reducer;

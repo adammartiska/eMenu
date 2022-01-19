@@ -20,9 +20,14 @@ export type Scalars = {
   Float: number;
 };
 
-export type DrinkInputType = {
-  count: Scalars["Int"];
-  id: Scalars["Int"];
+export type CreateSuborder = {
+  __typename?: "CreateSuborder";
+  createSuborder?: Maybe<OrderType>;
+};
+
+export type CreateSuborderCreateSuborderArgs = {
+  suborder: SuborderInputType;
+  token: Scalars["String"];
 };
 
 export type DrinkType = {
@@ -35,7 +40,6 @@ export type DrinkType = {
   name: Scalars["String"];
   /** Drink Price */
   price: Scalars["Float"];
-  type?: Maybe<MealTypeEnumType>;
   /** Unit in which is Amount stated */
   unit: Scalars["String"];
 };
@@ -53,39 +57,35 @@ export type MealType = {
   name: Scalars["String"];
   /** Meal price */
   price: Scalars["Float"];
-  type?: Maybe<MealTypeEnumType>;
-};
-
-/** Describes whether is Meal or Drink */
-export enum MealTypeEnumType {
-  Drink = "DRINK",
-  Meal = "MEAL",
-}
-
-export type MealsMutation = {
-  __typename?: "MealsMutation";
-  createSuborder?: Maybe<SuborderType>;
-};
-
-export type MealsMutationCreateSuborderArgs = {
-  drinks?: Maybe<Array<Maybe<DrinkInputType>>>;
-  meals?: Maybe<Array<Maybe<MealInputType>>>;
-  suborder: SuborderInputType;
 };
 
 export type MealsQuery = {
   __typename?: "MealsQuery";
   drinks?: Maybe<Array<Maybe<DrinkType>>>;
   meals?: Maybe<Array<Maybe<MealType>>>;
-  orders?: Maybe<Array<Maybe<OrderType>>>;
-  suborders?: Maybe<Array<Maybe<SuborderType>>>;
+  orderById?: Maybe<OrderType>;
+};
+
+export type MealsQueryOrderByIdArgs = {
+  orderId: Scalars["Int"];
+  token: Scalars["String"];
+};
+
+export type OrderChangedSubscription = {
+  __typename?: "OrderChangedSubscription";
+  orderChanged?: Maybe<OrderType>;
+};
+
+export type OrderChangedSubscriptionOrderChangedArgs = {
+  orderId: Scalars["Int"];
+  token: Scalars["String"];
 };
 
 /** Describes state of order */
 export enum OrderStateEnumType {
   Closed = "CLOSED",
   Open = "OPEN",
-  Paid = "PAID",
+  Waiting = "WAITING",
 }
 
 export type OrderType = {
@@ -95,20 +95,53 @@ export type OrderType = {
   /** Order id */
   id: Scalars["Int"];
   orderState?: Maybe<OrderStateEnumType>;
+  suborders?: Maybe<Array<Maybe<SuborderType>>>;
   /** Table id */
   tableId: Scalars["Int"];
+  /** Token */
+  token: Scalars["String"];
+};
+
+export type SuborderDrinkType = {
+  __typename?: "SuborderDrinkType";
+  /** Amount of drink measured in stored unit */
+  amount: Scalars["Float"];
+  /** Count of drinks in suborder. */
+  count: Scalars["Int"];
+  /** Drink Id */
+  id: Scalars["Int"];
+  /** Drink name. */
+  name: Scalars["String"];
+  /** Drink Price */
+  price: Scalars["Float"];
+  /** Unit in which is Amount stated */
+  unit: Scalars["String"];
 };
 
 export type SuborderInputType = {
-  id: Scalars["Int"];
-  orderId: Scalars["Int"];
+  drinks?: Maybe<Array<Maybe<MealInputType>>>;
+  meals?: Maybe<Array<Maybe<MealInputType>>>;
   tableId: Scalars["Int"];
+};
+
+export type SuborderMealType = {
+  __typename?: "SuborderMealType";
+  /** Count of meal in suborder */
+  count: Scalars["Int"];
+  /** Meal id */
+  id: Scalars["Int"];
+  /** Meal name */
+  name: Scalars["String"];
+  /** Meal price */
+  price: Scalars["Float"];
 };
 
 export type SuborderType = {
   __typename?: "SuborderType";
+  drinks?: Maybe<Array<Maybe<SuborderDrinkType>>>;
   /** Suborder id */
   id: Scalars["Int"];
+  meals?: Maybe<Array<Maybe<SuborderMealType>>>;
   /** Order id */
   orderId: Scalars["Int"];
   /** Table id */
@@ -117,25 +150,19 @@ export type SuborderType = {
 
 export type MealsQueryVariables = Exact<{ [key: string]: never }>;
 
-// export type MealsQuery = {
-//   __typename?: "MealsQuery";
-//   meals?:
-//     | Array<
-//         | { __typename?: "MealType"; id: number; name: string; price: number }
-//         | null
-//         | undefined
-//       >
-//     | null
-//     | undefined;
-// };
-
 export type DrinksQueryVariables = Exact<{ [key: string]: never }>;
 
 export type DrinksQuery = {
   __typename?: "MealsQuery";
   drinks?:
     | Array<
-        | { __typename?: "DrinkType"; id: number; name: string; price: number }
+        | {
+            __typename?: "DrinkType";
+            id: number;
+            name: string;
+            price: number;
+            amount: number;
+          }
         | null
         | undefined
       >
@@ -144,15 +171,71 @@ export type DrinksQuery = {
 };
 
 export type CreateSuborderMutationVariables = Exact<{
-  suborder: SuborderInputType;
+  tableId: Scalars["Int"];
   meals?: Maybe<Array<Maybe<MealInputType>> | Maybe<MealInputType>>;
-  drinks?: Maybe<Array<Maybe<DrinkInputType>> | Maybe<DrinkInputType>>;
+  drinks?: Maybe<Array<Maybe<MealInputType>> | Maybe<MealInputType>>;
+  token: Scalars["String"];
 }>;
 
 export type CreateSuborderMutation = {
-  __typename?: "MealsMutation";
+  __typename?: "CreateSuborder";
   createSuborder?:
-    | { __typename?: "SuborderType"; id: number; orderId: number }
+    | { __typename?: "OrderType"; id: number; token: string; tableId: number }
+    | null
+    | undefined;
+};
+
+export type OrderChangedSubscriptionSubscriptionVariables = Exact<{
+  orderId: Scalars["Int"];
+  token: Scalars["String"];
+}>;
+
+export type OrderChangedSubscriptionSubscription = {
+  __typename?: "OrderChangedSubscription";
+  orderChanged?:
+    | {
+        __typename?: "OrderType";
+        id: number;
+        token: string;
+        orderState?: OrderStateEnumType | null | undefined;
+        finalPrice: number;
+        suborders?:
+          | Array<
+              | {
+                  __typename?: "SuborderType";
+                  meals?:
+                    | Array<
+                        | {
+                            __typename?: "SuborderMealType";
+                            id: number;
+                            name: string;
+                            price: number;
+                          }
+                        | null
+                        | undefined
+                      >
+                    | null
+                    | undefined;
+                  drinks?:
+                    | Array<
+                        | {
+                            __typename?: "SuborderDrinkType";
+                            id: number;
+                            name: string;
+                            price: number;
+                          }
+                        | null
+                        | undefined
+                      >
+                    | null
+                    | undefined;
+                }
+              | null
+              | undefined
+            >
+          | null
+          | undefined;
+      }
     | null
     | undefined;
 };
@@ -212,6 +295,7 @@ export const DrinksDocument = gql`
       id
       name
       price
+      amount
     }
   }
 `;
@@ -256,14 +340,19 @@ export type DrinksQueryResult = Apollo.QueryResult<
   DrinksQueryVariables
 >;
 export const CreateSuborderDocument = gql`
-  mutation createSuborder(
-    $suborder: SuborderInputType!
+  mutation CreateSuborder(
+    $tableId: Int!
     $meals: [MealInputType]
-    $drinks: [DrinkInputType]
+    $drinks: [MealInputType]
+    $token: String!
   ) {
-    createSuborder(suborder: $suborder, meals: $meals, drinks: $drinks) {
+    createSuborder(
+      suborder: { tableId: $tableId, meals: $meals, drinks: $drinks }
+      token: $token
+    ) {
       id
-      orderId
+      token
+      tableId
     }
   }
 `;
@@ -285,9 +374,10 @@ export type CreateSuborderMutationFn = Apollo.MutationFunction<
  * @example
  * const [createSuborderMutation, { data, loading, error }] = useCreateSuborderMutation({
  *   variables: {
- *      suborder: // value for 'suborder'
+ *      tableId: // value for 'tableId'
  *      meals: // value for 'meals'
  *      drinks: // value for 'drinks'
+ *      token: // value for 'token'
  *   },
  * });
  */
@@ -312,3 +402,60 @@ export type CreateSuborderMutationOptions = Apollo.BaseMutationOptions<
   CreateSuborderMutation,
   CreateSuborderMutationVariables
 >;
+export const OrderChangedSubscriptionDocument = gql`
+  subscription OrderChangedSubscription($orderId: Int!, $token: String!) {
+    orderChanged(orderId: $orderId, token: $token) {
+      id
+      token
+      orderState
+      suborders {
+        meals {
+          id
+          name
+          price
+        }
+        drinks {
+          id
+          name
+          price
+        }
+      }
+      finalPrice
+    }
+  }
+`;
+
+/**
+ * __useOrderChangedSubscriptionSubscription__
+ *
+ * To run a query within a React component, call `useOrderChangedSubscriptionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useOrderChangedSubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderChangedSubscriptionSubscription({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useOrderChangedSubscriptionSubscription(
+  baseOptions: Apollo.SubscriptionHookOptions<
+    OrderChangedSubscriptionSubscription,
+    OrderChangedSubscriptionSubscriptionVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSubscription<
+    OrderChangedSubscriptionSubscription,
+    OrderChangedSubscriptionSubscriptionVariables
+  >(OrderChangedSubscriptionDocument, options);
+}
+export type OrderChangedSubscriptionSubscriptionHookResult = ReturnType<
+  typeof useOrderChangedSubscriptionSubscription
+>;
+export type OrderChangedSubscriptionSubscriptionResult =
+  Apollo.SubscriptionResult<OrderChangedSubscriptionSubscription>;

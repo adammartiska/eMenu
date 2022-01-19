@@ -1,22 +1,37 @@
 import Counter from "../components/Counter";
 import { useDispatch, useSelector } from "react-redux";
 import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 import { incrementCount, decrementCount } from "./drinksSlice";
+import { getMealById, getDrinkById } from "../utils/utils";
+import { useCreateSuborderMutation } from "../generated/graphql";
+import { CheckoutItem } from "../components/CheckoutItem";
+import { emptyCart, saveOrderId } from "./orderSlice";
+import { saveToken } from "./userSlice";
 import "./drinks-menu-page.scss";
 
 const formatPrice = (price, count) => {
   return `${(price * count).toFixed(2)} €`;
 };
 
-const DrinksMenuPage = () => {
-  const drinks = useSelector((state) => state.cart.drinks);
+const CheckoutPage = () => {
+  //const [tableId, setTableId] = React.useState(Math.rand());
+  const userToken = useSelector((state) => state?.user?.token);
+  const drinksOrder = useSelector((state) => state?.order?.inCart?.drinks);
+  const mealsOrder = useSelector((state) => state?.order?.inCart?.meals);
+  const [createSuborderMutation] = useCreateSuborderMutation({
+    variables: {
+      tableId: 50,
+      meals: mealsOrder,
+      drinks: drinksOrder,
+      //below is random token with length of our token, received token will be different
+      token: userToken ?? "vDso4eBx",
+    },
+  });
+
+  //TODO WTF???
+  const meals = useSelector((state) => state?.meals?.meals?.meals);
+  const drinks = useSelector((state) => state?.drinks?.drinks);
   const dispatch = useDispatch();
 
   const handleAddButtonClick = React.useCallback(
@@ -29,37 +44,64 @@ const DrinksMenuPage = () => {
     [dispatch]
   );
 
+  const submitOrder = React.useCallback(async () => {
+    const response = await createSuborderMutation();
+    if (response?.data) {
+      dispatch(saveToken(response?.data?.createSuborder?.token));
+      dispatch(saveOrderId(response?.data?.createSuborder?.id));
+      dispatch(emptyCart());
+    }
+  }, [createSuborderMutation, dispatch]);
+
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="caption table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Polozka</TableCell>
-            <TableCell align="center">Mnozstvo</TableCell>
-            <TableCell align="right">Cena</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {drinks.map(({ id, name, count, price }) => (
-            <TableRow key={name}>
-              <TableCell component="th" scope="row">
-                {name}
-              </TableCell>
-              <TableCell align="center">
-                <Counter
-                  id={id}
-                  count={count}
-                  onAddButtonClick={() => handleAddButtonClick(id)}
-                  onRemoveButtonClick={handleRemoveButtonClick}
-                />
-              </TableCell>
-              <TableCell align="right">{formatPrice(price, count)}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div
+      style={
+        {
+          // display: "flex",
+          // flexDirection: "column",
+          // justifyContent: "center",
+          // alignItems: "center",
+        }
+      }
+    >
+      {mealsOrder.map(({ id, count }) => {
+        const { name, price } = getMealById(id, meals);
+        return (
+          <CheckoutItem
+            id={id}
+            title={name}
+            price={price}
+            count={count}
+            isMeal
+          />
+        );
+      })}
+      {drinksOrder.map(({ id, count }) => {
+        const { name, price } = getDrinkById(id, drinks);
+        return (
+          <CheckoutItem id={id} title={name} price={price} count={count} />
+        );
+      })}
+      <Button
+        onClick={submitOrder}
+        variant="contained"
+        color="complementary"
+        //endIcon={<AddShoppingCartIcon />}git
+        sx={{
+          width: 100,
+          position: "absolute",
+          bottom: 65,
+          left: "calc(50% - 50px)",
+          textTransform: "none",
+          height: 35,
+          bgcolor: "onyx",
+          marginTop: 6,
+        }}
+      >
+        Objednat
+      </Button>
+    </div>
   );
 };
 
-export default DrinksMenuPage;
+export default CheckoutPage;

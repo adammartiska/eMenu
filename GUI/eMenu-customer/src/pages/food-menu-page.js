@@ -1,56 +1,60 @@
 import React from "react";
-import MenuItem3 from "../components/MenuItem3";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "./drinksSlice";
+import { useDispatch } from "react-redux";
+import { cacheMeals } from "./mealsSlice";
+import { addMealToCart } from "./orderSlice";
 import { useMealsQuery } from "../generated/graphql";
+import "./food-menu-page.scss";
+import FoodCard from "../components/FoodCard";
+import { SwipeableBottomDrawer } from "../components/SwipeableBottomDrawer";
 
 const FoodMenuPage = () => {
-  const { data, error, loading } = useMealsQuery();
-  const [mealOrder, setMealOrder] = React.useState({});
+  const { data: meals, error, loading } = useMealsQuery();
+  const [showDrawer, setShowDrawer] = React.useState(false);
+  const [currentlyOpenedMealId, setCurrentlyOpenedMealId] =
+    React.useState(null);
   const dispatch = useDispatch();
 
-  const handleAddButtonClick = React.useCallback(
-    (id) =>
-      setMealOrder({
-        ...mealOrder,
-        [id]: ++mealOrder[id],
-      }),
-    [mealOrder]
-  );
-
-  const handleRemoveButtonClick = React.useCallback(
-    (id) => {
-      if (mealOrder[id] === 0) {
-        return;
-      }
-      setMealOrder({
-        ...mealOrder,
-        [id]: --mealOrder[id],
-      });
-    },
-    [mealOrder]
-  );
+  React.useEffect(() => {
+    // cache meals once its data is loaded
+    dispatch(cacheMeals(meals));
+  }, [meals, dispatch]);
 
   //TODO ADD some kind of user notification that items were added into cart
   const handleAddToBag = React.useCallback(
-    (id, name, price) =>
-      dispatch(addToCart({ id, name, count: mealOrder[id], price })),
-    [mealOrder, dispatch]
+    ({ id, count, additionalOrderInfo }) => {
+      dispatch(
+        addMealToCart({
+          id,
+          count,
+          additionalOrderInfo: additionalOrderInfo ?? undefined,
+        })
+      );
+      setShowDrawer(false);
+    },
+    [dispatch]
   );
   return (
-    <div className="drinks-menu-page-wrapper">
-      {data?.meals.map(({ id, name, price }) => (
-        <MenuItem3
+    <div className="food-menu-page-wrapper">
+      {meals?.meals.map(({ id, name, price }) => (
+        <FoodCard
           key={id}
           id={id}
-          onAddButtonClick={handleAddButtonClick}
-          onRemoveButtonClick={handleRemoveButtonClick}
-          onAddToBagClick={handleAddToBag}
-          name={name}
-          count={mealOrder.cocaCola}
+          title={name}
           price={price}
+          onClick={(id) => {
+            setCurrentlyOpenedMealId(id);
+            setShowDrawer(true);
+          }}
         />
       ))}
+      <SwipeableBottomDrawer
+        isMeal
+        image
+        showDrawer={showDrawer}
+        setShowDrawer={setShowDrawer}
+        handleAddToBag={handleAddToBag}
+        currentlyOpenedItemId={currentlyOpenedMealId}
+      />
     </div>
   );
 };

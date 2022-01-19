@@ -7,7 +7,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import "./MenuItem.css";
 import "./Counter.css";
 
-const Counter = ({ id, count, onAddButtonClick, onRemoveButtonClick }) => {
+const Counter = ({ id, count = 1, onAddButtonClick, onRemoveButtonClick }) => {
   return (
     <ButtonGroup
       sx={{
