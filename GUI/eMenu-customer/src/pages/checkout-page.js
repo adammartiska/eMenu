@@ -2,6 +2,7 @@ import Counter from "../components/Counter";
 import { useDispatch, useSelector } from "react-redux";
 import * as React from "react";
 import Button from "@mui/material/Button";
+import { Typography } from "@mui/material";
 import { incrementCount, decrementCount } from "./drinksSlice";
 import { getMealById, getDrinkById } from "../utils/utils";
 import { useCreateSuborderMutation } from "../generated/graphql";
@@ -21,7 +22,7 @@ const CheckoutPage = () => {
   const mealsOrder = useSelector((state) => state?.order?.inCart?.meals);
   const [createSuborderMutation] = useCreateSuborderMutation({
     variables: {
-      tableId: 50,
+      tableId: 51,
       meals: mealsOrder,
       drinks: drinksOrder,
       //below is random token with length of our token, received token will be different
@@ -64,28 +65,46 @@ const CheckoutPage = () => {
         }
       }
     >
-      {mealsOrder.map(({ id, count }) => {
-        const { name, price } = getMealById(id, meals);
-        return (
-          <CheckoutItem
-            id={id}
-            title={name}
-            price={price}
-            count={count}
-            isMeal
-          />
-        );
-      })}
-      {drinksOrder.map(({ id, count }) => {
-        const { name, price } = getDrinkById(id, drinks);
-        return (
-          <CheckoutItem id={id} title={name} price={price} count={count} />
-        );
-      })}
+      {mealsOrder.length === 0 && drinksOrder.length === 0 ? (
+        <Typography
+          component="div"
+          variant="h4"
+          sx={{
+            height: "80vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "grayInactive.main",
+          }}
+        >
+          Nemate zatial ziadne objednavky
+        </Typography>
+      ) : (
+        <>
+          {mealsOrder.map(({ id, count }) => {
+            const { name, price } = getMealById(id, meals);
+            return (
+              <CheckoutItem
+                id={id}
+                title={name}
+                price={price}
+                count={count}
+                isMeal
+              />
+            );
+          })}
+          {drinksOrder.map(({ id, count }) => {
+            const { name, price } = getDrinkById(id, drinks);
+            return (
+              <CheckoutItem id={id} title={name} price={price} count={count} />
+            );
+          })}
+        </>
+      )}
       <Button
         onClick={submitOrder}
         variant="contained"
-        color="complementary"
+        color="grayInactive"
         //endIcon={<AddShoppingCartIcon />}git
         sx={{
           width: 100,

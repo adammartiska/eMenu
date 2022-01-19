@@ -64,7 +64,7 @@ const BottomNavigator = ({ onRouteChange, currentRoute }) => {
             color={
               // this is kinda bad, TODO replace it with url content, but for now this is how MUI works
               // returning index of route
-              currentRoute === 2 ? "complementary" : "complementary"
+              currentRoute === 2 ? "fontInactive" : "fontActive"
             }
           >
             <ShoppingBasketIcon />

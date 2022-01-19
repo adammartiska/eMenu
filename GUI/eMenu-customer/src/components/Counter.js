@@ -29,9 +29,9 @@ const Counter = ({ id, count = 1, onAddButtonClick, onRemoveButtonClick }) => {
       </IconButton>
       <Button
         disabled
+        color="grayInactive"
         sx={{
           "&.Mui-disabled": {
-            bgcolor: "onyx.main",
             color: "black",
           },
         }}

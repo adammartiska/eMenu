@@ -202,7 +202,7 @@ export const SwipeableBottomDrawer = ({
                     additionalOrderInfo: additionalorderInfo ?? undefined,
                   })
                 }
-                color="onyx"
+                color="grayInactive"
                 variant="contained"
                 //endIcon={<AddShoppingCartIcon />}
                 sx={{

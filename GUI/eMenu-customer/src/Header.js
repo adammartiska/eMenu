@@ -14,7 +14,7 @@ const renderBadgeAccordingOrderState = (state) => {
     return (
       <WatchLaterIcon
         sx={{
-          color: "orange",
+          color: "yellow",
           fontSize: 20,
           position: "absolute",
           bottom: 15,

@@ -72,11 +72,13 @@ const ORDER_CHANGED_SUBSCRIPTION = gql`
           id
           name
           price
+          count
         }
         drinks {
           id
           name
           price
+          count
         }
       }
       finalPrice

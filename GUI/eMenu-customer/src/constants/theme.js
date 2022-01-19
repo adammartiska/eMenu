@@ -50,7 +50,7 @@ export const theme = createTheme({
       main: "#4891FE",
     },
     fontActive: {
-      main: "#0B6CFE",
+      main: "#000",
       contrastText: "#fff",
     },
     fontInactive: {
