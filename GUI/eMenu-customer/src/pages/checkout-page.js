@@ -21,7 +21,7 @@ const CheckoutPage = () => {
   const mealsOrder = useSelector((state) => state?.order?.inCart?.meals);
   const [createSuborderMutation] = useCreateSuborderMutation({
     variables: {
-      tableId: 48,
+      tableId: 50,
       meals: mealsOrder,
       drinks: drinksOrder,
       //below is random token with length of our token, received token will be different

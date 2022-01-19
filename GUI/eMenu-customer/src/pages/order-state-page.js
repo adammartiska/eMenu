@@ -1,35 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import * as React from "react";
-import { last, append } from "ramda";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { Button } from "@mui/material";
-import {
-  useCreateSuborderMutation,
-  useOrderChangedSubscriptionSubscription,
-} from "../generated/graphql";
 import { PriceTaggedItem } from "../components/PriceTaggedItem";
 import "./drinks-menu-page.scss";
-import { ErrorOutlineRounded } from "@mui/icons-material";
 
 const formatPrice = (price, count) => {
   return `${(price * count).toFixed(2)} €`;
 };
 
 const OrderStatePage = () => {
-  const orderId = useSelector((state) => state?.order?.id);
-  const token = useSelector((state) => state?.user?.token);
-  const [currentFinalPrice, setCurrentFinalPrice] = React.useState(0);
-  //   const [createSuborderMutation, { data, loading, error }] =
-  //     useCreateSuborderMutation({
-  //       variables: {
-  //         tableId: 17,
-  //         meals: [{ id: 1, count: 2 }],
-  //         drinks: [{ id: 1, count: 3 }],
-  //         token: "bpTtlPuC",
-  //       },
-  //     });
-
   const meals = useSelector((state) => state?.order?.confirmedOrdered?.meals);
   const drinks = useSelector((state) => state?.order?.confirmedOrdered?.drinks);
   const fp = useSelector((state) => state?.order?.finalPrice);

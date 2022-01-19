@@ -4,6 +4,7 @@ export const userSlice = createSlice({
   name: "order",
   initialState: {
     id: null,
+    orderState: null,
     finalPrice: 0,
     inCart: {
       meals: [],
@@ -82,6 +83,9 @@ export const userSlice = createSlice({
         state.confirmedOrdered.drinks = payload;
       }
     },
+    updateOrderStateFromWebSocket: (state, { payload }) => {
+      state.orderState = payload;
+    },
     updateFinalPriceFromWebSocket: (state, { payload }) => {
       state.finalPrice = payload;
     },
@@ -99,6 +103,7 @@ export const {
   cacheOrderedMealsFromWebSocket,
   cacheOrderedDrinksFromWebSocket,
   updateFinalPriceFromWebSocket,
+  updateOrderStateFromWebSocket,
 } = userSlice.actions;
 
 export default userSlice.reducer;

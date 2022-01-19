@@ -6,8 +6,10 @@ import {
   cacheOrderedDrinksFromWebSocket,
   cacheOrderedMealsFromWebSocket,
   updateFinalPriceFromWebSocket,
+  updateOrderStateFromWebSocket,
 } from "./orderSlice";
 
+//TODO should I implement this as a hook? would be better
 export const Wrapper = ({ children }) => {
   const dispatch = useDispatch();
   const orderId = useSelector((state) => state?.order?.id);
@@ -23,9 +25,10 @@ export const Wrapper = ({ children }) => {
     if (data?.orderChanged) {
       const newSuborder = last(data?.orderChanged.suborders);
       console.log(newSuborder);
+      dispatch(updateOrderStateFromWebSocket(data?.orderChanged?.orderState));
+      dispatch(updateFinalPriceFromWebSocket(data?.orderChanged?.finalPrice));
       dispatch(cacheOrderedMealsFromWebSocket(newSuborder?.meals));
       dispatch(cacheOrderedDrinksFromWebSocket(newSuborder?.drinks));
-      dispatch(updateFinalPriceFromWebSocket(data?.orderChanged?.finalPrice));
     }
   }, [data, error, dispatch]);
 
