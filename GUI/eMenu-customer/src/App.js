@@ -11,9 +11,12 @@ import BottomNavigator from "./BottomNavigator";
 import Header from "./Header";
 import "./App.css";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { last } from "ramda";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { split, HttpLink } from "@apollo/client";
+import { useSelector, useDispatch } from "react-redux";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { Wrapper } from "./pages/wrapper";
 import { WebSocketLink } from "@apollo/client/link/ws";
 
 const httpLink = new HttpLink({
@@ -48,13 +51,6 @@ const splitLink = split(
   wsLink,
   httpLink
 );
-
-// const wsLink = new WebSocketLink({
-//   uri: "http://localhost:8000/graphql",
-//   options: {
-//     reconnect: true,
-//   },
-// });
 
 const client = new ApolloClient({
   //uri: "http://localhost:8000/graphql",
@@ -157,29 +153,31 @@ function App() {
       <ApolloProvider client={client}>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
-            <Router>
-              <Header />
-              <div className="app-wrapper">
-                <Switch>
-                  <Route path="/food">
-                    <FoodMenuPage />
-                  </Route>
-                  <Route path="/drinks">
-                    <DrinksMenuPage />
-                  </Route>
-                  <Route path="/cart">
-                    <CheckoutPage />
-                  </Route>
-                  <Route path="/orderInformation">
-                    <OrderStatePage />
-                  </Route>
-                </Switch>
-                <BottomNavigator
-                  onRouteChange={(event, newValue) => setValue(newValue)}
-                  currentRoute={value}
-                />
-              </div>
-            </Router>
+            <Wrapper>
+              <Router>
+                <Header />
+                <div className="app-wrapper">
+                  <Switch>
+                    <Route path="/food">
+                      <FoodMenuPage />
+                    </Route>
+                    <Route path="/drinks">
+                      <DrinksMenuPage />
+                    </Route>
+                    <Route path="/cart">
+                      <CheckoutPage />
+                    </Route>
+                    <Route path="/orderInformation">
+                      <OrderStatePage />
+                    </Route>
+                  </Switch>
+                  <BottomNavigator
+                    onRouteChange={(event, newValue) => setValue(newValue)}
+                    currentRoute={value}
+                  />
+                </div>
+              </Router>
+            </Wrapper>
           </ThemeProvider>
         </Provider>
       </ApolloProvider>

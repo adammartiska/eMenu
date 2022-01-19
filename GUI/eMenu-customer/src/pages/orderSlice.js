@@ -4,6 +4,7 @@ export const userSlice = createSlice({
   name: "order",
   initialState: {
     id: null,
+    finalPrice: 0,
     inCart: {
       meals: [],
       drinks: [],
@@ -11,6 +12,10 @@ export const userSlice = createSlice({
     ordered: {
       meals: [],
       drinks: [],
+    },
+    confirmedOrdered: {
+      meals: null,
+      drinks: null,
     },
   },
   reducers: {
@@ -57,6 +62,29 @@ export const userSlice = createSlice({
     saveOrderId: (state, { payload }) => {
       state.id = payload;
     },
+    cacheOrderedMealsFromWebSocket: (state, { payload }) => {
+      if (state.confirmedOrdered.meals) {
+        state.confirmedOrdered.meals = [
+          ...state.confirmedOrdered.meals,
+          ...payload,
+        ];
+      } else {
+        state.confirmedOrdered.meals = payload;
+      }
+    },
+    cacheOrderedDrinksFromWebSocket: (state, { payload }) => {
+      if (state.confirmedOrdered.drinks) {
+        state.confirmedOrdered.drinks = [
+          ...state.confirmedOrdered.drinks,
+          ...payload,
+        ];
+      } else {
+        state.confirmedOrdered.drinks = payload;
+      }
+    },
+    updateFinalPriceFromWebSocket: (state, { payload }) => {
+      state.finalPrice = payload;
+    },
   },
 });
 
@@ -68,6 +96,9 @@ export const {
   saveOrderId,
   incrementCount,
   decrementCount,
+  cacheOrderedMealsFromWebSocket,
+  cacheOrderedDrinksFromWebSocket,
+  updateFinalPriceFromWebSocket,
 } = userSlice.actions;
 
 export default userSlice.reducer;

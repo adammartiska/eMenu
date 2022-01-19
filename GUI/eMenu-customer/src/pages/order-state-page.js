@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import * as React from "react";
-import { head, append } from "ramda";
+import { last, append } from "ramda";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { Button } from "@mui/material";
@@ -30,43 +30,9 @@ const OrderStatePage = () => {
   //       },
   //     });
 
-  const { data, loading, error } = useOrderChangedSubscriptionSubscription({
-    variables: {
-      orderId,
-      token,
-    },
-  });
-
-  const [orderedDrinks, setOrderedDrinks] = React.useState(null);
-  const [orderedMeals, setOrderedMeals] = React.useState(null);
-  //TODO WTF???
-  const meals = useSelector((state) => state?.meals?.meals?.meals);
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    if (data?.orderChanged) {
-      const newSuborder = head(data?.orderChanged.suborders);
-      console.log(newSuborder);
-      setOrderedMeals((orderedMeals) => {
-        if (orderedMeals) {
-          return [...newSuborder?.meals, ...orderedMeals];
-        } else {
-          return newSuborder?.meals;
-        }
-      });
-      setOrderedDrinks((orderedDrinks) => {
-        if (orderedDrinks) {
-          return [...newSuborder?.drinks, ...orderedDrinks];
-        } else {
-          return newSuborder?.drinks;
-        }
-      });
-      setCurrentFinalPrice(data?.orderChanged?.finalPrice);
-    }
-  }, [data, error]);
-
-  console.log(orderedDrinks);
-  console.log(orderedMeals);
+  const meals = useSelector((state) => state?.order?.confirmedOrdered?.meals);
+  const drinks = useSelector((state) => state?.order?.confirmedOrdered?.drinks);
+  const fp = useSelector((state) => state?.order?.finalPrice);
 
   return (
     <div
@@ -129,7 +95,7 @@ const OrderStatePage = () => {
             bgColor: "black",
           }}
         />
-        {orderedMeals?.map(({ id, name, price }) => (
+        {meals?.map(({ id, name, price }) => (
           <PriceTaggedItem
             key={id}
             id={id}
@@ -138,7 +104,7 @@ const OrderStatePage = () => {
             //additionalOrderInfo={additionalOrderInfo}
           />
         ))}
-        {orderedDrinks?.map(({ id, name, price }) => (
+        {drinks?.map(({ id, name, price }) => (
           <PriceTaggedItem
             key={id}
             id={id}
@@ -166,7 +132,7 @@ const OrderStatePage = () => {
             marginTop: 6,
           }}
         >
-          {`${currentFinalPrice ?? 0} €`}
+          {`${fp} €`}
         </Button>
       </div>
     </div>

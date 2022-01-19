@@ -2,13 +2,6 @@ import Counter from "../components/Counter";
 import { useDispatch, useSelector } from "react-redux";
 import * as React from "react";
 import Button from "@mui/material/Button";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { incrementCount, decrementCount } from "./drinksSlice";
 import { getMealById, getDrinkById } from "../utils/utils";
 import { useCreateSuborderMutation } from "../generated/graphql";
@@ -28,7 +21,7 @@ const CheckoutPage = () => {
   const mealsOrder = useSelector((state) => state?.order?.inCart?.meals);
   const [createSuborderMutation] = useCreateSuborderMutation({
     variables: {
-      tableId: 42,
+      tableId: 48,
       meals: mealsOrder,
       drinks: drinksOrder,
       //below is random token with length of our token, received token will be different
