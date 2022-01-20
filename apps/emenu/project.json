@@ -1,0 +1,6 @@
+{
+  "root": "apps/emenu",
+  "sourceRoot": "apps/emenu/src",
+  "projectType": "application",
+  "tags": []
+}
