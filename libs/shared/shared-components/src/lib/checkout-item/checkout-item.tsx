@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 import { Divider } from '@mui/material';
 import Counter from '../counter/counter';
 import { useDispatch } from 'react-redux';
-import { incrementCount, decrementCount } from '../pages/orderSlice';
+import { incrementCount, decrementCount } from '../../../../../customer/redux';
 import './checkout-item.module.css';
 
 /* eslint-disable-next-line */

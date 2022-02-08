@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import * as React from 'react';
 import { Typography, Button } from '@mui/material';
-import { incrementCount, decrementCount } from '@temp-workspace/customer/redux';
-import { getMealById, getDrinkById } from '@temp-workspace/shared/utils';
-import { useCreateSuborderMutation } from '@temp-workspace/customer/generated/graphql';
-import { CheckoutItem } from '@temp-workspace/shared/shared-components';
-import { emptyCart, saveOrderId } from '@temp-workspace/customer/redux';
-import { saveToken } from '@temp-workspace/customer/redux';
+import { incrementCount, decrementCount } from '@emenu/customer/redux';
+import { getMealById, getDrinkById } from '@emenu/shared/utils';
+import { useCreateSuborderMutation } from '@emenu/customer/generated';
+import { CheckoutItem } from '@emenu/shared/shared-components';
+import { emptyCart, saveOrderId } from '@emenu/customer/redux';
+import { saveToken } from '@emenu/customer/redux';
 import './drinks-menu-page.scss';
-import './checkout-page.module.css';
 
 /* eslint-disable-next-line */
 export interface CheckoutPageProps {}

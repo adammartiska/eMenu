@@ -3,9 +3,8 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { Button } from '@mui/material';
-import { PriceTaggedItem } from '@temp-workspace/shared/shared-components';
+import { PriceTaggedItem } from '@emenu/shared/shared-components';
 import './drinks-menu-page.scss';
-import './order-state-page.module.css';
 
 const formatPrice = (price: number, count: number) => {
   return `${(price * count).toFixed(2)} €`;

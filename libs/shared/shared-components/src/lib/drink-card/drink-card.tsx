@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import CardActionArea from '@mui/material/CardActionArea';
 import Typography from '@mui/material/Typography';
-import './MenuItem.css';
+// import './MenuItem.css';
 import burgerUrl from '../static/burger.jpeg';
 import './drink-card.module.css';
 

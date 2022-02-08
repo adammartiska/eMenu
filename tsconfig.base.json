@@ -24,7 +24,7 @@
       "@emenu/customer/shared/utils": [
         "libs/customer/shared/utils/src/index.ts"
       ],
-      "@emenu/shared/generated": ["libs/customer/generated/graphql.tsx"],
+      "@emenu/customer/generated": ["libs/customer/generated/graphql.tsx"],
       "@emenu/shared/shared-components": [
         "libs/shared/shared-components/src/index.ts"
       ],

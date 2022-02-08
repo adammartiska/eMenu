@@ -15,7 +15,7 @@ import './swipeable-bottom-drawer.module.css';
 
 /* eslint-disable-next-line */
 export interface SwipeableBottomDrawerProps {
-  currentlyOpenedItemId: number;
+  currentlyOpenedItemId?: number;
   showDrawer: boolean;
   setShowDrawer: (open: boolean) => void;
   isMeal: boolean;

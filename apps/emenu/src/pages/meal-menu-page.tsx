@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { cacheMeals } from '@temp-workspace/customer/redux';
-import { addMealToCart } from '@temp-workspace/customer/redux';
-import { useMealsQuery } from '@temp-workspace/customer/generated/graphql';
+import { cacheMeals } from '@emenu/customer/redux';
+import { addMealToCart } from '@emenu/customer/redux';
+import { useMealsQuery } from '@emenu/customer/generated';
 import './food-menu-page.scss';
 import {
   FoodCard,
   SwipeableBottomDrawer,
-} from '@temp-workspace/shared/shared-components';
+} from '@emenu/shared/shared-components';
 
 /* eslint-disable-next-line */
 export interface MealMenuPageProps {}
@@ -21,9 +21,8 @@ export interface MealType {
 export const MealMenuPage: React.FC<MealMenuPageProps> = () => {
   const { data: meals, error, loading } = useMealsQuery();
   const [showDrawer, setShowDrawer] = React.useState(false);
-  const [currentlyOpenedMealId, setCurrentlyOpenedMealId] = React.useState<
-    number | null
-  >(null);
+  const [currentlyOpenedMealId, setCurrentlyOpenedMealId] =
+    React.useState<number>();
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -47,7 +46,7 @@ export const MealMenuPage: React.FC<MealMenuPageProps> = () => {
   );
   return (
     <div className="food-menu-page-wrapper">
-      {meals?.meals.map(({ id, name, price }: MealType) => (
+      {meals?.meals?.map(({ id, name, price }: any) => (
         <FoodCard
           key={id}
           id={id}
