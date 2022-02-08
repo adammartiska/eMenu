@@ -4,9 +4,9 @@ import { Typography, Button } from '@mui/material';
 import { incrementCount, decrementCount } from '@temp-workspace/customer/redux';
 import { getMealById, getDrinkById } from '@temp-workspace/shared/utils';
 import { useCreateSuborderMutation } from '@temp-workspace/customer/generated/graphql';
-import { CheckoutItem } from '../components/CheckoutItem';
-import { emptyCart, saveOrderId } from './orderSlice';
-import { saveToken } from './userSlice';
+import { CheckoutItem } from '@temp-workspace/shared/shared-components';
+import { emptyCart, saveOrderId } from '@temp-workspace/customer/redux';
+import { saveToken } from '@temp-workspace/customer/redux';
 import './drinks-menu-page.scss';
 import './checkout-page.module.css';
 

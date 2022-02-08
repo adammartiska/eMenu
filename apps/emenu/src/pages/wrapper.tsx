@@ -7,7 +7,7 @@ import {
   cacheOrderedMealsFromWebSocket,
   updateFinalPriceFromWebSocket,
   updateOrderStateFromWebSocket,
-} from './orderSlice';
+} from '@temp-workspace/customer/redux';
 
 //TODO should I implement this as a hook? would be better
 export const Wrapper: React.FC<any> = ({ children }) => {

@@ -9,23 +9,26 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import burgerUrl from '../static/burger.jpeg';
 import Counter from '../counter/counter';
-import { getMealById, getDrinkById } from '../utils/utils';
+import { getMealById, getDrinkById } from '../../../../utils/src';
 import { useSelector } from 'react-redux';
 import './swipeable-bottom-drawer.module.css';
 
 /* eslint-disable-next-line */
 export interface SwipeableBottomDrawerProps {
-  currentlyOpenedItemId: number | null;
+  currentlyOpenedItemId: number;
   showDrawer: boolean;
   setShowDrawer: (open: boolean) => void;
   isMeal: boolean;
-  handleAddToBag: (
-    id: number,
-    count: number,
-    additionalOrderInfo: string | undefined
-  ) => void;
-  image: string;
+  handleAddToBag: (values: {
+    id: number;
+    count: number;
+    additionalOrderInfo: string | undefined;
+  }) => void;
+  image?: string;
 }
+
+//TODO LOTS OF ANY'S JUST WANTED TO SPEED UP DEVELOPMENT, THIS COMPONENT
+// DEFINITELY NEEDS REFACTORING
 
 export const SwipeableBottomDrawer: React.FC<SwipeableBottomDrawerProps> = ({
   showDrawer = false,
@@ -35,25 +38,27 @@ export const SwipeableBottomDrawer: React.FC<SwipeableBottomDrawerProps> = ({
   currentlyOpenedItemId,
   image,
 }) => {
-  const currentTypeItems = useSelector((state) =>
+  const currentTypeItems = useSelector((state: any) =>
     isMeal ? state?.meals?.meals : state?.drinks?.drinks
   );
 
   const [currentlySelectedItem, setCurrentlySelectedItem] =
-    React.useState(null);
-  const currentTypeOrder = useSelector((state) =>
+    React.useState<any>(null);
+  const currentTypeOrder = useSelector((state: any) =>
     isMeal ? state?.meals?.mealOrder : state?.drinks?.drinksOrder
   );
-  const currentItemInOrder = useSelector((state) =>
-    state?.drinks?.drinkOrder?.find(({ id }) => id === currentlyOpenedItemId)
+  const currentItemInOrder = useSelector((state: any) =>
+    state?.drinks?.drinkOrder?.find(
+      ({ id }: any) => id === currentlyOpenedItemId
+    )
   );
   const [isAdditionalOrderInfo, setIsAdditionalOrderInfo] =
     React.useState(false);
   const [additionalorderInfo, setAdditionalOrderInfo] = React.useState(null);
   const [currentItemCount, setCurrentItemCount] = React.useState(1);
   const toggleDrawer =
-    (open, id = null) =>
-    (event) => {
+    (open: any, id = null) =>
+    (event: any) => {
       if (open) {
         const maybeItem = isMeal
           ? getMealById(currentlyOpenedItemId, currentTypeOrder)
@@ -81,6 +86,7 @@ export const SwipeableBottomDrawer: React.FC<SwipeableBottomDrawerProps> = ({
   return (
     <SwipeableDrawer
       anchor="bottom"
+      onOpen={() => console.log('opened')}
       open={showDrawer}
       onClose={toggleDrawer(false)}
       sx={{
@@ -157,7 +163,7 @@ export const SwipeableBottomDrawer: React.FC<SwipeableBottomDrawerProps> = ({
           </Typography>
           <FormControlLabel
             checked={isAdditionalOrderInfo}
-            size="small"
+            //size="small"
             control={<Checkbox />}
             label={
               <Typography variant="body2" color="textSecondary">
@@ -183,7 +189,7 @@ export const SwipeableBottomDrawer: React.FC<SwipeableBottomDrawerProps> = ({
               inputProps={{ style: { fontSize: 12 } }}
               //value={additionalorderInfo}
               //onChange={handleChange}
-              onBlur={(e) => setAdditionalOrderInfo(e.target.value)}
+              onBlur={(e: any) => setAdditionalOrderInfo(e.target.value)}
             />
           )}
           <div
@@ -214,7 +220,7 @@ export const SwipeableBottomDrawer: React.FC<SwipeableBottomDrawerProps> = ({
                   additionalOrderInfo: additionalorderInfo ?? undefined,
                 })
               }
-              color="grayInactive"
+              //color="grayInactive"
               variant="contained"
               //endIcon={<AddShoppingCartIcon />}
               sx={{

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, cacheDrinks } from './drinksSlice';
+import { addToCart, cacheDrinks } from '@temp-workspace/customer/redux';
 import { addDrinkToCart } from '@temp-workspace/customer/redux';
-import { useDrinksQuery } from '../generated/graphql';
+import { useDrinksQuery } from '../../../../libs/customer/generated/graphql';
 import { DrinkCard } from '@temp-workspace/shared/shared-components';
 import './drinks-menu-page.scss';
 import { SwipeableBottomDrawer } from '@temp-workspace/shared/shared-components';
@@ -57,7 +57,7 @@ export function DrinkMenuPage(props: DrinkMenuPageProps) {
 
   return (
     <div className="drinks-menu-page-wrapper">
-      {data?.drinks.map(({ id, name, price, amount }: DrinkType) => (
+      {data?.drinks?.map(({ id, name, price, amount }: any) => (
         <DrinkCard
           key={id}
           id={id}
@@ -66,7 +66,7 @@ export function DrinkMenuPage(props: DrinkMenuPageProps) {
             setShowDrawer(true);
           }}
           title={name}
-          count={drinksOrder.cocaCola}
+          //count={drinksOrder?.cocaCola}
           price={price}
           amount={amount}
         />

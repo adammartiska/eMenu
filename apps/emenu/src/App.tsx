@@ -1,31 +1,29 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import FoodMenuPage from "./pages/food-menu-page";
-import DrinksMenuPage from "./pages/drinks-menu-page";
-import CheckoutPage from "./pages/checkout-page";
-import OrderStatePage from "./pages/order-state-page";
-import store from "./store";
-import { Provider } from "react-redux";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import BottomNavigator from "./BottomNavigator";
-import Header from "./Header";
-import "./App.css";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { last } from "ramda";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { split, HttpLink } from "@apollo/client";
-import { useSelector, useDispatch } from "react-redux";
-import { getMainDefinition } from "@apollo/client/utilities";
-import { Wrapper } from "./pages/wrapper";
-import { WebSocketLink } from "@apollo/client/link/ws";
-import { theme } from "./constants/theme";
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import MealMenuPage from './pages/meal-menu-page';
+import DrinksMenuPage from './pages/drink-menu-page';
+import CheckoutPage from './pages/checkout-page';
+import OrderStatePage from './pages/order-state-page';
+import store from '@temp-workspace/customer/redux';
+import { Provider } from 'react-redux';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import BottomNavigator from './BottomNavigator';
+import Header from './Header';
+import './App.css';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { split, HttpLink } from '@apollo/client';
+import { getMainDefinition } from '@apollo/client/utilities';
+import { Wrapper } from './pages/wrapper';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { theme } from './constants/theme';
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:8000/graphql",
+  uri: 'http://localhost:8000/graphql',
 });
 
 const wsLink = new WebSocketLink({
-  uri: "ws://localhost:8000/graphql",
+  uri: 'ws://localhost:8000/graphql',
   options: {
     reconnect: true,
     // TODO AUTHENTICATION
@@ -44,8 +42,8 @@ const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
     return (
-      definition.kind === "OperationDefinition" &&
-      definition.operation === "subscription"
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
     );
   },
   wsLink,
@@ -55,9 +53,9 @@ const splitLink = split(
 const client = new ApolloClient({
   //uri: "http://localhost:8000/graphql",
   link: splitLink,
-  fetchOptions: {
-    mode: "no-cors",
-  },
+  // fetchOptions: {
+  //   mode: 'no-cors',
+  // },
   //credentials: "same-origin",
   cache: new InMemoryCache(),
 });
@@ -66,7 +64,7 @@ const client = new ApolloClient({
 const queryClient = new QueryClient();
 
 function App() {
-  const [value, setValue] = React.useState("/");
+  const [value, setValue] = React.useState('/');
   return (
     <QueryClientProvider client={queryClient}>
       <ApolloProvider client={client}>
@@ -78,7 +76,7 @@ function App() {
                 <div className="app-wrapper">
                   <Switch>
                     <Route path="/food">
-                      <FoodMenuPage />
+                      <MealMenuPage />
                     </Route>
                     <Route path="/drinks">
                       <DrinksMenuPage />
@@ -91,7 +89,9 @@ function App() {
                     </Route>
                   </Switch>
                   <BottomNavigator
-                    onRouteChange={(event, newValue) => setValue(newValue)}
+                    onRouteChange={(event: any, newValue: any) =>
+                      setValue(newValue)
+                    }
                     currentRoute={value}
                   />
                 </div>
