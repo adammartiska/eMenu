@@ -1,0 +1,23 @@
+{
+  "root": "libs/customer/pages",
+  "sourceRoot": "libs/customer/pages/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/customer/pages/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/customer/pages"],
+      "options": {
+        "jestConfig": "libs/customer/pages/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
