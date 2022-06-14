@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, cacheDrinks } from '@emenu/customer/redux';
+import { cacheDrinks } from '@emenu/customer/redux';
 import { addDrinkToCart } from '@emenu/customer/redux';
 import { useDrinksQuery } from '../../../../libs/customer/generated/graphql';
 import { DrinkCard } from '@emenu/shared/shared-components';
@@ -29,8 +29,8 @@ export function DrinkMenuPage(props: DrinkMenuPageProps) {
   //const drinks = useSelector((state) => state.cart.drinks);
   const { data, error, loading } = useDrinksQuery();
   const [currentlyOpenedDrinkId, setCurrentlyOpenedDrinkId] = React.useState<
-    number | null
-  >(null);
+    number | undefined
+  >();
   const [showDrawer, setShowDrawer] = React.useState(false);
   const dispatch = useDispatch();
   const [drinksOrder, setDrinksOrder] = React.useState(initialState);

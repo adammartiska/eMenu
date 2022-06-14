@@ -4,7 +4,7 @@ import MealMenuPage from './pages/meal-menu-page';
 import DrinksMenuPage from './pages/drink-menu-page';
 import CheckoutPage from './pages/checkout-page';
 import OrderStatePage from './pages/order-state-page';
-import store from '@emenu/customer/redux';
+import store from './store';
 import { Provider } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import BottomNavigator from './BottomNavigator';

@@ -23,7 +23,7 @@ export const Wrapper: React.FC<any> = ({ children }) => {
   });
   React.useEffect(() => {
     if (data?.orderChanged) {
-      const newSuborder = last(data?.orderChanged.suborders);
+      const newSuborder = last(data?.orderChanged?.suborders ?? []);
       console.log(newSuborder);
       dispatch(updateOrderStateFromWebSocket(data?.orderChanged?.orderState));
       dispatch(updateFinalPriceFromWebSocket(data?.orderChanged?.finalPrice));

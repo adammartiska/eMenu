@@ -83,24 +83,24 @@ export function CheckoutPage(props: CheckoutPageProps) {
       ) : (
         <>
           {mealsOrder.map(({ id, count }: CheckoutItem) => {
-            const { name, price } = getMealById(id, meals);
+            const meal = getMealById(id, meals);
             return (
               <CheckoutItem
                 id={id}
-                title={name}
-                price={price}
+                title={meal?.name}
+                price={meal?.price}
                 count={count}
                 isMeal
               />
             );
           })}
           {drinksOrder.map(({ id, count }: CheckoutItem) => {
-            const { name, price } = getDrinkById(id, drinks);
+            const drink = getDrinkById(id, drinks);
             return (
               <CheckoutItem
                 id={id}
-                title={name}
-                price={price}
+                title={drink?.name}
+                price={drink?.price}
                 count={count}
                 isMeal={false}
               />
